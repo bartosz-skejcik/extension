@@ -1,4 +1,5 @@
 import { ChangeEvent, useState, KeyboardEvent } from "react";
+import Image from "next/image";
 
 type Props = {
     placeholder: string;
@@ -23,6 +24,7 @@ export default function Search({ placeholder, searchState }: Props) {
                 src="https://static-00.iconduck.com/assets.00/google-marketing-platform-icon-256x256-kwk0alas.png"
                 className="mx-4 my-2 h-8 w-8"
                 id="search-icon"
+                alt="Google Search Icon"
             />
             <input
                 type="text"

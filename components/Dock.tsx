@@ -17,7 +17,7 @@ function Dock({ setOpen, setNewAppOpen, apps, setApps, storage }: Props) {
         if (storage) {
             storage.setItem("appSettings", JSON.stringify(apps));
         }
-    }, [apps]);
+    }, [apps, storage]);
 
     return (
         <section className="flex w-[3.5%] h-full items-center justify-between flex-col bg-gray-900 py-6 space-y-6">
