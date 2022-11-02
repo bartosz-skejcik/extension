@@ -1,6 +1,4 @@
-"use server";
-
-import Tile from "./Tile";
+import Tile from "./tile";
 import { Cog6ToothIcon, HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { ItemInterface, ReactSortable } from "react-sortablejs";
 import { Dispatch, SetStateAction, useEffect } from "react";

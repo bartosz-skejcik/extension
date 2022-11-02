@@ -1,5 +1,4 @@
 import { ChangeEvent, useState, KeyboardEvent } from "react";
-import Image from "next/image";
 
 type Props = {
     placeholder: string;

@@ -1,20 +1,14 @@
-"use client";
-
-import type { NextPage } from "next";
-import Head from "next/head";
-
-import Search from "../components/Search";
-import Weather from "../components/Weather";
-import Clock from "../components/Clock";
-import Performance from "../components/Performance";
-import Dock from "../components/Dock";
-import SettingsModal from "../components/SettingsModal";
-import NewAppModal from "../components/NewAppModal";
+import Search from "../components/search";
+import Weather from "../components/weather";
+import Clock from "../components/clock";
+import Dock from "../components/dock";
+import SettingsModal from "../components/settingsmodal";
+import NewAppModal from "../components/newappmodal";
 
 import { ItemInterface } from "react-sortablejs";
 import { useState, useEffect } from "react";
 
-const Home: NextPage = () => {
+export default function Home() {
     const [clock, setClock] = useState(true);
     const [search, setSearch] = useState(true);
     const [weather, setWeather] = useState(true);
@@ -64,7 +58,7 @@ const Home: NextPage = () => {
         const clockSettings = localStorage.getItem("clockSettings");
         const searchSettings = localStorage.getItem("searchSettings");
         const appSettings = localStorage.getItem("appSettings");
-        let dockSize = localStorage.getItem("dockSize");
+        const dockSize = localStorage.getItem("dockSize");
 
         // set settings
         if (weatherSettings) setWeather(JSON.parse(weatherSettings));
@@ -101,16 +95,6 @@ const Home: NextPage = () => {
                 selected={selected}
             />
             <section className="flex felx-col items-start justify-center bg-[url('/wallpaper.jpg')] bg-cover w-full h-full">
-                <Head>
-                    <title>
-                        Home {" ⌛ "}
-                        {new Date().toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "numeric",
-                            hour12: false,
-                        })}
-                    </title>
-                </Head>
                 <SettingsModal
                     open={open}
                     setOpen={setOpen}
@@ -133,7 +117,6 @@ const Home: NextPage = () => {
                 <section className="flex flex-col items-start justify-center w-1/4 px-10 py-20 space-y-8">
                     <Clock clock={clock} />
                     <Weather weather={weather} />
-                    <Performance />
                 </section>
                 <section className="w-3/4 px-10 py-20">
                     <Search
@@ -144,6 +127,4 @@ const Home: NextPage = () => {
             </section>
         </section>
     );
-};
-
-export default Home;
+}

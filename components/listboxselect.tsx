@@ -16,10 +16,6 @@ const options = [
 ];
 
 function ListboxSelect({ selected, setSelected, storage }: Props) {
-    useEffect(() => {
-        storage && setSelected(JSON.parse(storage.getItem("dockSize") || ""));
-    }, [storage]);
-
     return (
         <div className="z-40">
             <Listbox

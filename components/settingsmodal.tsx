@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import ListboxSelect from "./ListboxSelect";
-import SwitchButton from "./Switch";
+import ListboxSelect from "./listboxselect";
+import SwitchButton from "./switchbutton";
 
 type Props = {
     open: boolean;
