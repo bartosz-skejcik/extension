@@ -65,7 +65,7 @@ const Home: NextPage = () => {
         if (clockSettings) setClock(JSON.parse(clockSettings));
         if (searchSettings) setSearch(JSON.parse(searchSettings));
         if (appSettings) setApps(JSON.parse(appSettings));
-        if (dockSize && localStorage) setSelected({ name: dockSize });
+        if (dockSize) setSelected({ name: dockSize });
 
         setStorage(localStorage);
     }, []);

@@ -29,14 +29,16 @@ function Dock({
     }, [apps, storage]);
 
     useEffect(() => {
-        if (selected.name == "Medium") {
-            setSize(3.5);
+        if (selected.name == "Huge") {
+            setSize(4.5);
         } else if (selected.name == "Large") {
             setSize(4);
+        } else if (selected.name == "Medium") {
+            setSize(3.5);
         } else if (selected.name == "Small") {
             setSize(3);
-        } else if (selected.name == "Huge") {
-            setSize(4.5);
+        } else {
+            setSize(3.5);
         }
     }, [selected.name]);
 
@@ -44,7 +46,7 @@ function Dock({
         <section
             className={
                 `flex ` +
-                (size > 0 && `w-[${size}%]`) +
+                (size > 0 ? `w-[${size}%]` : `w-[4.5%]`) +
                 ` h-full items-center justify-between flex-col bg-gray-900 py-6 space-y-6`
             }
         >
