@@ -7,6 +7,7 @@ import NewAppModal from "../components/newappmodal";
 
 import { ItemInterface } from "react-sortablejs";
 import { useState, useEffect } from "react";
+import Head from "next/head";
 
 export default function Home() {
     const [clock, setClock] = useState(true);
@@ -86,6 +87,15 @@ export default function Home() {
 
     return (
         <section className="flex flex-row w-screen h-screen overflow-hidden">
+            <Head>
+                <title>
+                    Home{" ⌛"}
+                    {new Date().toLocaleTimeString("pl-PL", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                    })}
+                </title>
+            </Head>
             <Dock
                 apps={apps}
                 storage={storage}
