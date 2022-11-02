@@ -74,6 +74,13 @@ const Home: NextPage = () => {
         if (dockSize) {
             setSelected(JSON.parse(dockSize));
         } else {
+            localStorage.setItem(
+                "dockSize",
+                JSON.stringify({
+                    name: "Medium",
+                    value: 3.5,
+                })
+            );
             setSelected({ name: "Medium", value: 3.5 });
         }
 
