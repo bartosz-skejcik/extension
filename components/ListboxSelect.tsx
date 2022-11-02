@@ -3,33 +3,34 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 type Props = {
-    selected: { name: string | null };
-    setSelected: (value: { name: string | null }) => void;
+    selected: { name: string | null; value: number };
+    setSelected: (value: { name: string | null; value: number }) => void;
     storage: Storage | undefined;
 };
 
 const options = [
-    { name: "Small" },
-    { name: "Medium" },
-    { name: "Large" },
-    { name: "Huge" },
+    { name: "Small", value: 3 },
+    { name: "Medium", value: 3.5 },
+    { name: "Large", value: 4 },
+    { name: "Huge", value: 4.5 },
 ];
 
 function ListboxSelect({ selected, setSelected, storage }: Props) {
     useEffect(() => {
-        storage && setSelected({ name: storage.getItem("dockSize") });
+        storage && setSelected(JSON.parse(storage.getItem("dockSize") || ""));
     }, [storage]);
 
     return (
-        <div className="">
+        <div className="z-40">
             <Listbox
                 value={selected}
-                onChange={(option: { name: string }) => {
+                onChange={(option: { name: string; value: number }) => {
                     setSelected(option);
-                    if (storage) storage.setItem("dockSize", option.name);
+                    if (storage)
+                        storage.setItem("dockSize", JSON.stringify(option));
                 }}
             >
-                <div className="z-100">
+                <div>
                     <Listbox.Button className="cursor-default rounded-lg backdrop-blur-sm bg-gray-200/10 py-1 pl-3 pr-9 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate text-gray-400">
                             {selected.name}

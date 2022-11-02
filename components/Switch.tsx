@@ -12,7 +12,7 @@ export default function SwitchButton({ enabled, runFunction }: Props) {
             onChange={runFunction}
             className={`${
                 enabled ? "bg-blue-600" : "bg-gray-400"
-            } relative inline-flex h-6 w-11 items-center rounded-full -z-10`}
+            } relative inline-flex h-6 w-11 items-center rounded-full z-20`}
         >
             <span className="sr-only">Enable option</span>
             <span

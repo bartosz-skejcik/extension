@@ -1,3 +1,5 @@
+"use client";
+
 import type { NextPage } from "next";
 import Head from "next/head";
 
@@ -9,8 +11,8 @@ import Dock from "../components/Dock";
 import SettingsModal from "../components/SettingsModal";
 import NewAppModal from "../components/NewAppModal";
 
-import { useEffect, useState } from "react";
 import { ItemInterface } from "react-sortablejs";
+import { useState, useEffect } from "react";
 
 const Home: NextPage = () => {
     const [clock, setClock] = useState(true);
@@ -48,8 +50,12 @@ const Home: NextPage = () => {
             icon: "https://www.tellmebest.com/wp-content/uploads/2022/03/discord-logo-4-1.png",
         },
     ]);
-    const [selected, setSelected] = useState<{ name: string | null }>({
+    const [selected, setSelected] = useState<{
+        name: string | null;
+        value: number;
+    }>({
         name: "Medium",
+        value: 3.5,
     });
 
     useEffect(() => {
@@ -58,14 +64,18 @@ const Home: NextPage = () => {
         const clockSettings = localStorage.getItem("clockSettings");
         const searchSettings = localStorage.getItem("searchSettings");
         const appSettings = localStorage.getItem("appSettings");
-        const dockSize = localStorage.getItem("dockSize");
+        let dockSize = localStorage.getItem("dockSize");
 
         // set settings
         if (weatherSettings) setWeather(JSON.parse(weatherSettings));
         if (clockSettings) setClock(JSON.parse(clockSettings));
         if (searchSettings) setSearch(JSON.parse(searchSettings));
         if (appSettings) setApps(JSON.parse(appSettings));
-        if (dockSize) setSelected({ name: dockSize });
+        if (dockSize) {
+            setSelected(JSON.parse(dockSize));
+        } else {
+            setSelected({ name: "Medium", value: 3.5 });
+        }
 
         setStorage(localStorage);
     }, []);

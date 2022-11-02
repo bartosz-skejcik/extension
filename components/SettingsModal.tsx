@@ -13,8 +13,8 @@ type Props = {
     weather: boolean;
     setWeather: (weather: boolean) => void;
     storage: Storage | undefined;
-    selected: { name: string | null };
-    setSelected: (value: { name: string | null }) => void;
+    selected: { name: string | null; value: number };
+    setSelected: (value: { name: string | null; value: number }) => void;
 };
 
 export default function SettingsModal({
