@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import ListboxSelect from "./ListboxSelect";
 import SwitchButton from "./Switch";
 
 type Props = {
@@ -12,6 +13,8 @@ type Props = {
     weather: boolean;
     setWeather: (weather: boolean) => void;
     storage: Storage | undefined;
+    selected: { name: string | null };
+    setSelected: (value: { name: string | null }) => void;
 };
 
 export default function SettingsModal({
@@ -24,6 +27,8 @@ export default function SettingsModal({
     weather,
     setWeather,
     storage,
+    selected,
+    setSelected,
 }: Props) {
     function closeModal() {
         setOpen(false);
@@ -65,13 +70,23 @@ export default function SettingsModal({
                                 <section className="flex flex-col items-center justify-center space-y-4 mt-4">
                                     <div className="w-full flex flex-row items-center justify-between">
                                         <h3 className="text-xl text-gray-100">
+                                            Dock size
+                                        </h3>
+                                        <ListboxSelect
+                                            storage={storage}
+                                            selected={selected}
+                                            setSelected={setSelected}
+                                        />
+                                    </div>
+                                    <div className="w-full flex flex-row items-center justify-between">
+                                        <h3 className="text-xl text-gray-100">
                                             Clock
                                         </h3>
                                         <SwitchButton
                                             enabled={clock}
                                             runFunction={() => {
                                                 setClock(!clock);
-                                                if (storage)
+                                                storage &&
                                                     storage.setItem(
                                                         "clockSettings",
                                                         JSON.stringify(!clock)
@@ -87,7 +102,7 @@ export default function SettingsModal({
                                             enabled={search}
                                             runFunction={() => {
                                                 setSearch(!search);
-                                                if (storage)
+                                                storage &&
                                                     storage.setItem(
                                                         "searchSettings",
                                                         JSON.stringify(!search)
@@ -103,7 +118,7 @@ export default function SettingsModal({
                                             enabled={weather}
                                             runFunction={() => {
                                                 setWeather(!weather);
-                                                if (storage)
+                                                storage &&
                                                     storage.setItem(
                                                         "weatherSettings",
                                                         JSON.stringify(!weather)

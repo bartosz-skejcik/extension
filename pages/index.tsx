@@ -1,15 +1,16 @@
 import type { NextPage } from "next";
+import Head from "next/head";
+
 import Search from "../components/Search";
 import Weather from "../components/Weather";
 import Clock from "../components/Clock";
 import Performance from "../components/Performance";
 import Dock from "../components/Dock";
-
-import Head from "next/head";
-import { useEffect, useState } from "react";
 import SettingsModal from "../components/SettingsModal";
-import { ItemInterface } from "react-sortablejs";
 import NewAppModal from "../components/NewAppModal";
+
+import { useEffect, useState } from "react";
+import { ItemInterface } from "react-sortablejs";
 
 const Home: NextPage = () => {
     const [clock, setClock] = useState(true);
@@ -47,6 +48,9 @@ const Home: NextPage = () => {
             icon: "https://www.tellmebest.com/wp-content/uploads/2022/03/discord-logo-4-1.png",
         },
     ]);
+    const [selected, setSelected] = useState<{ name: string | null }>({
+        name: "Medium",
+    });
 
     useEffect(() => {
         // get settings from localStorage
@@ -54,12 +58,14 @@ const Home: NextPage = () => {
         const clockSettings = localStorage.getItem("clockSettings");
         const searchSettings = localStorage.getItem("searchSettings");
         const appSettings = localStorage.getItem("appSettings");
+        const dockSize = localStorage.getItem("dockSize");
 
         // set settings
         if (weatherSettings) setWeather(JSON.parse(weatherSettings));
         if (clockSettings) setClock(JSON.parse(clockSettings));
         if (searchSettings) setSearch(JSON.parse(searchSettings));
         if (appSettings) setApps(JSON.parse(appSettings));
+        if (dockSize && localStorage) setSelected({ name: dockSize });
 
         setStorage(localStorage);
     }, []);
@@ -75,6 +81,7 @@ const Home: NextPage = () => {
                 setApps={setApps}
                 setOpen={setOpen}
                 setNewAppOpen={setNewAppModalOpen}
+                selected={selected}
             />
             <section className="flex felx-col items-start justify-center bg-[url('/wallpaper.jpg')] bg-cover w-full h-full">
                 <Head>
@@ -97,6 +104,8 @@ const Home: NextPage = () => {
                     weather={weather}
                     setWeather={setWeather}
                     storage={storage}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
                 <NewAppModal
                     open={newAppModalOpen}

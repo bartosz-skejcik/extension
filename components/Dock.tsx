@@ -1,7 +1,7 @@
 import Tile from "./Tile";
 import { Cog6ToothIcon, HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { ItemInterface, ReactSortable } from "react-sortablejs";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface Props {
     setOpen: Dispatch<SetStateAction<boolean>>;
@@ -9,9 +9,18 @@ interface Props {
     apps: ItemInterface[];
     storage: Storage | undefined;
     setApps: Dispatch<SetStateAction<ItemInterface[]>>;
+    selected: { name: string | null };
 }
 
-function Dock({ setOpen, setNewAppOpen, apps, setApps, storage }: Props) {
+function Dock({
+    setOpen,
+    setNewAppOpen,
+    apps,
+    setApps,
+    storage,
+    selected,
+}: Props) {
+    const [size, setSize] = useState<number>(0);
     useEffect(() => {
         // save settings to localStorage
         if (storage) {
@@ -19,11 +28,32 @@ function Dock({ setOpen, setNewAppOpen, apps, setApps, storage }: Props) {
         }
     }, [apps, storage]);
 
+    useEffect(() => {
+        if (selected.name == "Medium") {
+            setSize(3.5);
+        } else if (selected.name == "Large") {
+            setSize(4);
+        } else if (selected.name == "Small") {
+            setSize(3);
+        } else if (selected.name == "Huge") {
+            setSize(4.5);
+        }
+    }, [selected.name]);
+
     return (
-        <section className="flex w-[3.5%] h-full items-center justify-between flex-col bg-gray-900 py-6 space-y-6">
+        <section
+            className={
+                `flex ` +
+                (size > 0 && `w-[${size}%]`) +
+                ` h-full items-center justify-between flex-col bg-gray-900 py-6 space-y-6`
+            }
+        >
             <section className="flex flex-col items-center justify-center">
                 <button
-                    onClick={() => window.open("#", "_self")}
+                    onClick={() => {
+                        window.open("#", "_self");
+                        console.log(`w-[${size}%]`);
+                    }}
                     className="flex items-center justify-center"
                 >
                     <HomeIcon className="p-1 w-8/12 h-8/12 rounded-xl hover:text-blue-600 hover:bg-gray-800/70 transition duration-500 text-gray-500" />

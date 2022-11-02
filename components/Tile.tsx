@@ -28,8 +28,6 @@ function Tile({ icon, href, apps, setApps }: Props) {
         >
             <a
                 href={href}
-                target="_blank"
-                rel="noreferrer"
                 className="flex p-2 mx-2 items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700 hover:rotate-12 transition duration-500"
             >
                 <img alt="icon" src={icon} className="block w-full h-full" />
@@ -42,7 +40,7 @@ function Tile({ icon, href, apps, setApps }: Props) {
                     setApps(apps.filter((app) => app.href !== href));
                 }}
             >
-                <MinusIcon className="w-4 h-4 rounded-full text-gray-300 bg-red-500 transition duration-500" />
+                <MinusIcon className="w-5 h-5 rounded-full text-black bg-red-500 transition duration-500" />
             </button>
         </div>
     );
