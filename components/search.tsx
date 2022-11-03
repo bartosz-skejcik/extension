@@ -27,6 +27,7 @@ export default function Search({ placeholder, searchState }: Props) {
             />
             <input
                 type="text"
+                ref={(input) => input && input.focus()}
                 placeholder={placeholder}
                 onChange={(e) => handleChange(e)}
                 onKeyDown={(e) => {

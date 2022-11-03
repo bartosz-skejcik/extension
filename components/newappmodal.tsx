@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { ItemInterface } from "react-sortablejs";
 
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function NewAppModal({ open, setOpen, apps, setApps }: Props) {
+    const [error, setError] = useState("");
     function closeModal() {
         setOpen(false);
     }
@@ -58,50 +59,57 @@ export default function NewAppModal({ open, setOpen, apps, setApps }: Props) {
                                             const href = formData.get("href");
                                             const icon = formData.get("icon");
                                             if (href && icon) {
-                                                setApps([
-                                                    ...apps,
-                                                    {
-                                                        id: apps.length + 1,
-                                                        href: href.toString(),
-                                                        icon: icon.toString(),
-                                                    },
-                                                ]);
+                                                if (!(apps.length >= 8)) {
+                                                    setApps([
+                                                        ...apps,
+                                                        {
+                                                            id: apps.length + 1,
+                                                            href: href.toString(),
+                                                            icon: icon.toString(),
+                                                        },
+                                                    ]);
+                                                    setError("");
+                                                    closeModal();
+                                                } else {
+                                                    setError(
+                                                        "Nie można dodać więcej skrótów!"
+                                                    );
+                                                }
+                                            } else {
+                                                setError(
+                                                    "Prosze podać obie wartości!"
+                                                );
                                             }
-                                            closeModal();
                                         }}
                                     >
                                         <div className="flex flex-col items-center justify-center space-y-2 mt-4">
-                                            <label
-                                                htmlFor="href"
-                                                className="text-gray-200"
-                                            >
-                                                URL
-                                            </label>
                                             <input
                                                 type="text"
+                                                ref={(input) =>
+                                                    input && input.focus()
+                                                }
                                                 name="href"
                                                 id="href"
-                                                className="w-full px-4 py-2 text-gray-900 bg-gray-200 rounded-md"
+                                                placeholder="URL"
+                                                className="w-full px-4 py-2 text-gray-300 bg-gray-300/10 backdrop-blur-md rounded-md"
                                             />
                                         </div>
                                         <div className="flex flex-col items-center justify-center space-y-2 mt-4">
-                                            <label
-                                                htmlFor="icon"
-                                                className="text-gray-200"
-                                            >
-                                                Icon
-                                            </label>
                                             <input
                                                 type="text"
                                                 name="icon"
                                                 id="icon"
-                                                className="w-full px-4 py-2 text-gray-900 bg-gray-200 rounded-md"
+                                                placeholder="Icon"
+                                                className="w-full px-4 py-2 text-gray-300 bg-gray-300/10 backdrop-blur-md rounded-md"
                                             />
+                                        </div>
+                                        <div className="flex flex-col items-center justify-center space-y-2 mt-4 text-red-500">
+                                            {error}
                                         </div>
                                         <div className="flex items-center justify-center mt-4">
                                             <button
                                                 type="submit"
-                                                className="px-4 py-2 text-gray-900 bg-gray-200 rounded-md"
+                                                className="px-4 py-2 text-gray-300 bg-blue-500/50 backdrop-blur-md rounded-md"
                                             >
                                                 Add
                                             </button>

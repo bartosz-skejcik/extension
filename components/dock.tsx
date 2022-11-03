@@ -1,5 +1,10 @@
 import Tile from "./tile";
-import { Cog6ToothIcon, HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+    Cog6ToothIcon,
+    HomeIcon,
+    PlusIcon,
+    UserCircleIcon,
+} from "@heroicons/react/24/outline";
 import { ItemInterface, ReactSortable } from "react-sortablejs";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
@@ -44,9 +49,11 @@ function Dock({
                     <HomeIcon className="p-1 w-8/12 h-8/12 rounded-xl hover:text-blue-600 hover:bg-gray-800/70 transition duration-500 text-gray-500" />
                 </button>
             </section>
-            <section className="flex flex-col items-center justify-start w-full h-full space-y-4">
+            <section
+                className={`flex flex-col items-center justify-start w-full h-full space-y-4`}
+            >
                 <ReactSortable
-                    className="flex flex-col items-center justify-start space-y-4"
+                    className={`flex flex-col items-center justify-start space-y-4`}
                     list={apps}
                     setList={setApps}
                     animation={200}
@@ -67,15 +74,18 @@ function Dock({
                     onClick={() => setNewAppOpen(true)}
                     className="flex items-center justify-center"
                 >
-                    <PlusIcon className="m-2 mx-4 rounded-lg w-11/12 h-11/12 hover:text-blue-600 hover:rotate-180 transition duration-500 text-gray-500" />
+                    <PlusIcon className="m-2 mx-4 rounded-lg w-11/12 h-11/12 hover:text-blue-600 hover:scale-90 hover:rotate-180 transition duration-500 text-gray-500" />
                 </button>
             </section>
-            <section className="flex flex-col items-center justify-center">
+            <section className="flex flex-col items-center justify-center space-y-4">
                 <button
                     onClick={() => setOpen(true)}
                     className="flex items-center justify-center"
                 >
-                    <Cog6ToothIcon className="w-8/12 h-8/12 rounded-full hover:text-blue-600 hover:rotate-180 transition duration-500 text-gray-500" />
+                    <Cog6ToothIcon className="w-8/12 h-8/12 rounded-full hover:text-blue-600 hover:scale-90 hover:rotate-180 transition duration-500 text-gray-500" />
+                </button>
+                <button className="flex items-center justify-center">
+                    <UserCircleIcon className="w-8/12 h-8/12 rounded-full hover:text-blue-600 hover:scale-95 transition duration-500 text-gray-500" />
                 </button>
             </section>
         </section>
