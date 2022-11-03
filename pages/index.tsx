@@ -8,6 +8,7 @@ import NewAppModal from "../components/newappmodal";
 import { ItemInterface } from "react-sortablejs";
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import { url } from "inspector";
 
 export default function Home() {
     const [clock, setClock] = useState(true);
@@ -52,6 +53,7 @@ export default function Home() {
         name: "Medium",
         value: 3.5,
     });
+    const [bgUrl, setBgUrl] = useState("");
 
     useEffect(() => {
         // get settings from localStorage
@@ -60,6 +62,7 @@ export default function Home() {
         const searchSettings = localStorage.getItem("searchSettings");
         const appSettings = localStorage.getItem("appSettings");
         const dockSize = localStorage.getItem("dockSize");
+        const wallpaperUrl = localStorage.getItem("wallpaper");
 
         // set settings
         if (weatherSettings) setWeather(JSON.parse(weatherSettings));
@@ -78,6 +81,15 @@ export default function Home() {
             );
             setSelected({ name: "Medium", value: 3.5 });
         }
+        if (wallpaperUrl) {
+            setBgUrl(wallpaperUrl);
+        } else {
+            localStorage.setItem(
+                "wallpaper",
+                "https://wallpaperaccess.com/full/2180654.jpg"
+            );
+            setBgUrl("https://wallpaperaccess.com/full/2180654.jpg");
+        }
 
         setStorage(localStorage);
     }, []);
@@ -86,7 +98,7 @@ export default function Home() {
     const [newAppModalOpen, setNewAppModalOpen] = useState<boolean>(false);
 
     return (
-        <section className="flex flex-row w-screen h-screen overflow-hidden">
+        <section className="flex flex-row w-screen h-screen overflow-x-hidden overflow-y-hidden">
             <Head>
                 <title>
                     Home{" ⌛"}
@@ -104,7 +116,10 @@ export default function Home() {
                 setNewAppOpen={setNewAppModalOpen}
                 selected={selected}
             />
-            <section className="flex felx-col items-start justify-center bg-[url('/wallpaper.jpg')] bg-cover w-full h-full">
+            <section
+                className={`flex felx-col items-start justify-center bg-cover w-full h-full`}
+                style={{ backgroundImage: `url(${bgUrl})` }}
+            >
                 <SettingsModal
                     open={open}
                     setOpen={setOpen}
@@ -117,6 +132,8 @@ export default function Home() {
                     storage={storage}
                     selected={selected}
                     setSelected={setSelected}
+                    bgUrl={bgUrl}
+                    setBgUrl={setBgUrl}
                 />
                 <NewAppModal
                     open={newAppModalOpen}

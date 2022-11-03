@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Dispatch, Fragment, SetStateAction } from "react";
+import Input from "./input";
 import ListboxSelect from "./listboxselect";
 import SwitchButton from "./switchbutton";
 
@@ -15,6 +16,8 @@ type Props = {
     storage: Storage | undefined;
     selected: { name: string | null; value: number };
     setSelected: (value: { name: string | null; value: number }) => void;
+    bgUrl: string;
+    setBgUrl: Dispatch<SetStateAction<string>>;
 };
 
 export default function SettingsModal({
@@ -29,6 +32,8 @@ export default function SettingsModal({
     storage,
     selected,
     setSelected,
+    bgUrl,
+    setBgUrl,
 }: Props) {
     function closeModal() {
         setOpen(false);
@@ -67,8 +72,8 @@ export default function SettingsModal({
                                 >
                                     User settings
                                 </Dialog.Title>
-                                <section className="flex flex-col items-center justify-center space-y-4 mt-4">
-                                    <div className="w-full flex flex-row items-center justify-between">
+                                <section className="flex flex-col items-center justify-center my-4">
+                                    <div className="w-full flex flex-row items-center justify-between pb-4 pt-2">
                                         <h3 className="text-xl text-gray-100">
                                             Dock size
                                         </h3>
@@ -78,7 +83,7 @@ export default function SettingsModal({
                                             setSelected={setSelected}
                                         />
                                     </div>
-                                    <div className="w-full flex flex-row items-center justify-between">
+                                    <div className="w-full flex flex-row items-center justify-between border-t-2 pt-4 pb-2 border-gray-500">
                                         <h3 className="text-xl text-gray-100">
                                             Clock
                                         </h3>
@@ -94,7 +99,7 @@ export default function SettingsModal({
                                             }}
                                         />
                                     </div>
-                                    <div className="w-full flex flex-row items-center justify-between">
+                                    <div className="w-full flex flex-row items-center justify-between py-2">
                                         <h3 className="text-xl text-gray-100">
                                             Search
                                         </h3>
@@ -110,7 +115,7 @@ export default function SettingsModal({
                                             }}
                                         />
                                     </div>
-                                    <div className="w-full flex flex-row items-center justify-between">
+                                    <div className="w-full flex flex-row items-center justify-between pt-2 pb-4">
                                         <h3 className="text-xl text-gray-100">
                                             Weather
                                         </h3>
@@ -124,6 +129,17 @@ export default function SettingsModal({
                                                         JSON.stringify(!weather)
                                                     );
                                             }}
+                                        />
+                                    </div>
+                                    <div className="w-full flex flex-col items-start justify-between border-t-2 pt-4 border-gray-500">
+                                        <h3 className="text-xl text-gray-100 mb-2">
+                                            Wallpaper
+                                        </h3>
+                                        <Input
+                                            value={bgUrl}
+                                            setValue={setBgUrl}
+                                            placeholder={"Wallpaper link"}
+                                            storage={storage}
                                         />
                                     </div>
                                 </section>
