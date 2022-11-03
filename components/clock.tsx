@@ -8,7 +8,7 @@ type Props = {
 function Clock({ clock }: Props) {
     const [time, setTime] = useState<any>([]);
     const [date, setDate] = useState<any>([]);
-    const greetings = ["Dzień dobry", "Hej", "Dobry wieczór"];
+    const greetings = ["Dzień dobry", "Dobry wieczór"];
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -57,13 +57,7 @@ function Clock({ clock }: Props) {
                     <h2 className="text-3xl font-semibold py-8">
                         {
                             // display the current greeting
-                            greetings[
-                                new Date().getHours() < 12
-                                    ? 0
-                                    : new Date().getHours() < 18
-                                    ? 1
-                                    : 2
-                            ]
+                            greetings[new Date().getHours() < 12 ? 0 : 1]
                         }
                         , Bartek
                     </h2>
