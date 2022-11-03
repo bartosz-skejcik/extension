@@ -56,9 +56,12 @@ function Dock({
                     className={`flex flex-col items-center justify-start space-y-4`}
                     list={apps}
                     setList={setApps}
-                    animation={200}
+                    animation={600}
                     swapThreshold={1}
-                    easing="cubic-bezier(1, 0, 0, 1)"
+                    easing="cubic-bezier(0, -0.6, 0, 1.6)"
+                    dragClass="contents"
+                    ghostClass="block"
+                    chosenClass="block"
                 >
                     {apps.map((item) => (
                         <Tile
