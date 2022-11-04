@@ -8,7 +8,7 @@ import NewAppModal from "../components/newappmodal";
 import { ItemInterface } from "react-sortablejs";
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import { url } from "inspector";
+import Workspaces from "../components/workspaces";
 
 export default function Home() {
     const [clock, setClock] = useState(true);
@@ -54,6 +54,7 @@ export default function Home() {
         value: 3.5,
     });
     const [bgUrl, setBgUrl] = useState("");
+    const [workspaces, setWorkspaces] = useState<any>();
 
     useEffect(() => {
         // get settings from localStorage
@@ -63,6 +64,7 @@ export default function Home() {
         const appSettings = localStorage.getItem("appSettings");
         const dockSize = localStorage.getItem("dockSize");
         const wallpaperUrl = localStorage.getItem("wallpaper");
+        const workspacesSettings = localStorage.getItem("workspaces");
 
         // set settings
         if (weatherSettings) setWeather(JSON.parse(weatherSettings));
@@ -90,6 +92,9 @@ export default function Home() {
             );
             setBgUrl("https://wallpaperaccess.com/full/2180654.jpg");
         }
+        if (workspacesSettings) {
+            setWorkspaces(JSON.parse(workspacesSettings));
+        }
 
         setStorage(localStorage);
     }, []);
@@ -98,7 +103,7 @@ export default function Home() {
     const [newAppModalOpen, setNewAppModalOpen] = useState<boolean>(false);
 
     return (
-        <section className="flex flex-row w-screen h-screen overflow-x-hidden overflow-y-hidden">
+        <section className="flex flex-row w-screen max-h-screen h-screen overflow-x-hidden overflow-y-hidden">
             <Head>
                 <title>
                     Home{" ⌛"}
@@ -141,15 +146,16 @@ export default function Home() {
                     apps={apps}
                     setApps={setApps}
                 />
-                <section className="flex flex-col items-start justify-center w-1/4 px-10 py-20 space-y-8">
+                <section className="flex flex-col items-center justify-start w-1/4 px-10 py-20 space-y-8 h-full">
                     <Clock clock={clock} />
                     <Weather weather={weather} />
                 </section>
-                <section className="w-3/4 px-10 py-20">
+                <section className="flex flex-col items-center justify-start w-3/4 px-10 py-20 space-y-8 h-full">
                     <Search
                         placeholder={"Search the web"}
                         searchState={search}
                     />
+                    {workspaces && <Workspaces workspaces={workspaces} />}
                 </section>
             </section>
         </section>
