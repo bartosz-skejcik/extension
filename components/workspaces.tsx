@@ -1,16 +1,24 @@
-import { Disclosure, Menu } from "@headlessui/react";
-import { ChevronUpIcon } from "@heroicons/react/24/outline";
+import { Disclosure } from "@headlessui/react";
+import { ChevronUpIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 
 type Props = {
     workspaces: any;
+    setOpen: (open: boolean) => void;
 };
 
-export default function Workspaces({ workspaces }: Props) {
+export default function Workspaces({ workspaces, setOpen }: Props) {
     return (
         <section className="flex flex-col items-start justify-start py-4 px-4 w-full h-full  backdrop-blur-md bg-gray-800/40 shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl">
             <h1 className="px-4 py-2 text-left text-2xl font-bold text-gray-300">
                 Workspaces
             </h1>
+            <button
+                onClick={() => setOpen(true)}
+                className="flex flex-row items-center justify-center w-full space-x-2 rounded-xl bg-gray-900/50 mx-2 py-1 font-medium text-gray-300 hover:bg-gray-800/50 transition duration-300"
+            >
+                <PlusCircleIcon className="w-6 h-6 block text-gray-300" />
+                <span className="text-gray-300">Add workspace</span>
+            </button>
             <div className="mx-auto w-full">
                 {Object.keys(workspaces).map(
                     (workspace: any, index: number) => (
@@ -39,7 +47,7 @@ export default function Workspaces({ workspaces }: Props) {
                                             } h-5 w-5 text-gray-300`}
                                         />
                                     </Disclosure.Button>
-                                    <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-200">
+                                    <Disclosure.Panel className="px-4 pt-3 pb-2 text-sm text-gray-200">
                                         <ul className="space-y-1">
                                             {workspaces[workspace].map(
                                                 (app: any, index: number) => (

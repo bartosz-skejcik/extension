@@ -55,6 +55,7 @@ export default function Home() {
     });
     const [bgUrl, setBgUrl] = useState("");
     const [workspaces, setWorkspaces] = useState<any>();
+    const [workspaceModalOpen, setWorkspaceModalOpen] = useState(false);
 
     useEffect(() => {
         // get settings from localStorage
@@ -155,7 +156,12 @@ export default function Home() {
                         placeholder={"Search the web"}
                         searchState={search}
                     />
-                    {workspaces && <Workspaces workspaces={workspaces} />}
+                    {workspaces && (
+                        <Workspaces
+                            setOpen={setWorkspaceModalOpen}
+                            workspaces={workspaces}
+                        />
+                    )}
                 </section>
             </section>
         </section>
