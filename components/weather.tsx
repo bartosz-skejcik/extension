@@ -59,7 +59,7 @@ function Weather({ weather }: Props) {
                         alt="weather icon"
                         className="w-24"
                     />
-                    <h2 className="text-6xl xl:text-8xl">
+                    <h2 className="text-6xl">
                         {data[0].Temperature?.Metric?.Value}°C
                     </h2>
                 </div>
