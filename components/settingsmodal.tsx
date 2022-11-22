@@ -13,6 +13,8 @@ type Props = {
     setSearch: (search: boolean) => void;
     weather: boolean;
     setWeather: (weather: boolean) => void;
+    news: boolean;
+    setNews: (news: boolean) => void;
     storage: Storage | undefined;
     selected: { name: string | null; value: number };
     setSelected: (value: { name: string | null; value: number }) => void;
@@ -29,6 +31,8 @@ export default function SettingsModal({
     setSearch,
     weather,
     setWeather,
+    news,
+    setNews,
     storage,
     selected,
     setSelected,
@@ -111,6 +115,22 @@ export default function SettingsModal({
                                                     storage.setItem(
                                                         "searchSettings",
                                                         JSON.stringify(!search)
+                                                    );
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="w-full flex flex-row items-center justify-between py-2">
+                                        <h3 className="text-xl text-gray-100">
+                                            News
+                                        </h3>
+                                        <SwitchButton
+                                            enabled={news}
+                                            runFunction={() => {
+                                                setNews(!news);
+                                                storage &&
+                                                    storage.setItem(
+                                                        "newsSettings",
+                                                        JSON.stringify(!news)
                                                     );
                                             }}
                                         />

@@ -9,11 +9,13 @@ import { ItemInterface } from "react-sortablejs";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Workspaces from "../components/workspaces";
+import News from "../components/news";
 
 export default function Home() {
     const [clock, setClock] = useState(true);
     const [search, setSearch] = useState(true);
     const [weather, setWeather] = useState(true);
+    const [news, setNews] = useState(true);
     const [storage, setStorage] = useState<Storage>();
     const [apps, setApps] = useState<ItemInterface[]>([
         {
@@ -62,6 +64,7 @@ export default function Home() {
         const weatherSettings = localStorage.getItem("weatherSettings");
         const clockSettings = localStorage.getItem("clockSettings");
         const searchSettings = localStorage.getItem("searchSettings");
+        const newsSettings = localStorage.getItem("newsSettings");
         const appSettings = localStorage.getItem("appSettings");
         const dockSize = localStorage.getItem("dockSize");
         const wallpaperUrl = localStorage.getItem("wallpaper");
@@ -71,6 +74,7 @@ export default function Home() {
         if (weatherSettings) setWeather(JSON.parse(weatherSettings));
         if (clockSettings) setClock(JSON.parse(clockSettings));
         if (searchSettings) setSearch(JSON.parse(searchSettings));
+        if (newsSettings) setNews(JSON.parse(newsSettings));
         if (appSettings) setApps(JSON.parse(appSettings));
         if (dockSize) {
             setSelected(JSON.parse(dockSize));
@@ -135,6 +139,8 @@ export default function Home() {
                     setSearch={setSearch}
                     weather={weather}
                     setWeather={setWeather}
+                    news={news}
+                    setNews={setNews}
                     storage={storage}
                     selected={selected}
                     setSelected={setSelected}
@@ -162,6 +168,7 @@ export default function Home() {
                             workspaces={workspaces}
                         />
                     )}
+                    <News news={news} />
                 </section>
             </section>
         </section>

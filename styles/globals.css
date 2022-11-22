@@ -12,3 +12,8 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* style the scroll bar to bi invisible */
+::-webkit-scrollbar {
+    display: none;
+}
