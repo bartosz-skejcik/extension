@@ -8,21 +8,25 @@ type Props = {
 export default function News({ news }: Props) {
     const [data, setData] = useState<any>([]);
 
-    const apiKey = "pub_137699b66e185d4660c11a2dc50d15bd8da11";
+    const apiKey = "pub_13769e3292267531fdb828270f29e0f038c93";
     useEffect(() => {
         const link =
             "https://newsdata.io/api/1/news?apikey=" +
             apiKey +
             "&country=pl&language=pl";
-        fetch(link)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data.results);
-                setData(data.results);
-            });
+        try {
+            fetch(link)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data.results);
+                    setData(data.results);
+                });
+        } catch (e) {
+            console.log(e);
+        }
     }, []);
 
-    return news ? (
+    return (
         <Transition
             show={news}
             enter="transition duration-300"
@@ -31,7 +35,7 @@ export default function News({ news }: Props) {
             leave="transition duration-300"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
-            className="w-full text-gray-200 flex flex-col items-center justify-center backdrop-blur-md bg-gray-800/40 bg-opacity-50 shadow-[0_0_3px_1px] shadow-gray-300 px-6 py-4 rounded-3xl overflow-y-scroll pt-20"
+            className="w-full h-full text-gray-200 flex flex-col items-center justify-center backdrop-blur-md bg-gray-800/40 bg-opacity-50 shadow-[0_0_3px_1px] shadow-gray-300 px-6 py-4 rounded-3xl overflow-y-scroll pt-20"
         >
             <h1 className="font-semibold text-3xl xl:text-4xl mb-10">News</h1>
             <div className="flex flex-wrap w-full h-full items-center justify-center gap-10">
@@ -40,7 +44,7 @@ export default function News({ news }: Props) {
                         item.image_url && (
                             <div
                                 key={i}
-                                className="w-1/3 flex flex-col items-center justify-center min-h-[27rem]"
+                                className="w-1/3 flex flex-col items-center justify-center min-h-[27rem] max-h-[27rem]"
                             >
                                 <img
                                     src={item.image_url}
@@ -49,8 +53,8 @@ export default function News({ news }: Props) {
                                 />
                                 <div className="w-full flex flex-col items-center justify-around space-y-5 h-full border-2 border-b-white/40 border-x-white/40 border-t-transparent rounded-b-3xl">
                                     <h1 className="text-2xl font-semibold text-center mt-2">
-                                        {item.title.length > 45
-                                            ? item.title.slice(0, 45) + "..."
+                                        {item.title.length > 50
+                                            ? item.title.slice(0, 50) + "..."
                                             : item.title}
                                     </h1>
                                     <p className="text-center">
@@ -75,7 +79,5 @@ export default function News({ news }: Props) {
                 )}
             </div>
         </Transition>
-    ) : (
-        <></>
     );
 }

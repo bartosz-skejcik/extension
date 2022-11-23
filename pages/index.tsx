@@ -153,11 +153,11 @@ export default function Home() {
                     apps={apps}
                     setApps={setApps}
                 />
-                <section className="flex flex-col items-center justify-start w-1/4 px-10 py-20 space-y-8 h-full">
+                <section className="flex flex-col items-center justify-start w-1/4 px-10 py-20 space-y-8 h-full overflow-y-scroll">
                     <Clock clock={clock} />
                     <Weather weather={weather} />
                 </section>
-                <section className="flex flex-col items-center justify-start w-3/4 px-10 py-20 space-y-8 h-full">
+                <section className="flex flex-col items-center justify-start w-3/4 px-10 py-20 h-full">
                     <Search
                         placeholder={"Search the web"}
                         searchState={search}
