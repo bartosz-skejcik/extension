@@ -21,7 +21,7 @@ export default function WorldCup({ worldcup }: Props) {
     };
 
     useEffect(() => {
-        if (data.length < 1) {
+        if (data && data.length < 1) {
             getData();
             console.log(data);
         }
