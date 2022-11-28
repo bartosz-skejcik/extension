@@ -10,12 +10,14 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import Workspaces from "../components/workspaces";
 import News from "../components/news";
+import WorldCup from "../components/worldcup";
 
 export default function Home() {
     const [clock, setClock] = useState(true);
     const [search, setSearch] = useState(true);
-    const [weather, setWeather] = useState(true);
-    const [news, setNews] = useState(true);
+    const [weather, setWeather] = useState(false);
+    const [news, setNews] = useState(false);
+    const [worldcup, setWorldCup] = useState(true);
     const [storage, setStorage] = useState<Storage>();
     const [apps, setApps] = useState<ItemInterface[]>([
         {
@@ -65,6 +67,7 @@ export default function Home() {
         const clockSettings = localStorage.getItem("clockSettings");
         const searchSettings = localStorage.getItem("searchSettings");
         const newsSettings = localStorage.getItem("newsSettings");
+        const worldcupSettings = localStorage.getItem("worldcupSettings");
         const appSettings = localStorage.getItem("appSettings");
         const dockSize = localStorage.getItem("dockSize");
         const wallpaperUrl = localStorage.getItem("wallpaper");
@@ -75,6 +78,7 @@ export default function Home() {
         if (clockSettings) setClock(JSON.parse(clockSettings));
         if (searchSettings) setSearch(JSON.parse(searchSettings));
         if (newsSettings) setNews(JSON.parse(newsSettings));
+        if (worldcupSettings) setWorldCup(JSON.parse(worldcupSettings));
         if (appSettings) setApps(JSON.parse(appSettings));
         if (dockSize) {
             setSelected(JSON.parse(dockSize));
@@ -157,7 +161,7 @@ export default function Home() {
                     <Clock clock={clock} />
                     <Weather weather={weather} />
                 </section>
-                <section className="flex flex-col items-center justify-start w-3/4 px-10 py-20 h-full">
+                <section className="flex flex-col items-center justify-start w-2/4 px-10 py-20 h-full">
                     <Search
                         placeholder={"Search the web"}
                         searchState={search}
@@ -169,6 +173,9 @@ export default function Home() {
                         />
                     )}
                     <News news={news} />
+                </section>
+                <section className="flex flex-col items-center justify-start w-1/4 px-10 py-20 space-y-8 h-full overflow-y-scroll">
+                    <WorldCup worldcup={worldcup} />
                 </section>
             </section>
         </section>
