@@ -57,15 +57,19 @@ export default function NewAppModal({ open, setOpen, apps, setApps }: Props) {
                                                 e.target as HTMLFormElement;
                                             const formData = new FormData(form);
                                             const href = formData.get("href");
-                                            const icon = formData.get("icon");
-                                            if (href && icon) {
+                                            const icon = formData.get("icon")
+                                                ? formData
+                                                      .get("icon")
+                                                      ?.toString()
+                                                : `https://www.google.com/s2/favicons?domain=${href}&sz=256`;
+                                            if (href) {
                                                 if (!(apps.length >= 8)) {
                                                     setApps([
                                                         ...apps,
                                                         {
                                                             id: apps.length + 1,
                                                             href: href.toString(),
-                                                            icon: icon.toString(),
+                                                            icon: icon,
                                                         },
                                                     ]);
                                                     setError("");
@@ -77,7 +81,7 @@ export default function NewAppModal({ open, setOpen, apps, setApps }: Props) {
                                                 }
                                             } else {
                                                 setError(
-                                                    "Prosze podać obie wartości!"
+                                                    "Prosze podać adres strony!"
                                                 );
                                             }
                                         }}
@@ -99,7 +103,7 @@ export default function NewAppModal({ open, setOpen, apps, setApps }: Props) {
                                                 type="text"
                                                 name="icon"
                                                 id="icon"
-                                                placeholder="Icon"
+                                                placeholder="Icon (optional)"
                                                 className="w-full px-4 py-2 text-gray-300 bg-gray-300/10 backdrop-blur-md rounded-md"
                                             />
                                         </div>

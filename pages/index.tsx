@@ -131,7 +131,7 @@ export default function Home() {
                 selected={selected}
             />
             <section
-                className={`flex felx-col items-start justify-center bg-cover w-full h-full`}
+                className={`flex flex-row items-start justify-center bg-cover w-full h-full`}
                 style={{ backgroundImage: `url(${bgUrl})` }}
             >
                 <SettingsModal
