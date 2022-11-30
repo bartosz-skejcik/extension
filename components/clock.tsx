@@ -14,13 +14,11 @@ function Clock({ clock }: Props) {
         const interval = setInterval(() => {
             // format time to: 14:06
             setTime(
-                new Date()
-                    .toLocaleTimeString("pl-PL", {
-                        hour: "numeric",
-                        minute: "numeric",
-                        hour12: true,
-                    })
-                    .split(" ")[0]
+                new Date().toLocaleTimeString("pl-PL", {
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: false,
+                })
             );
             // format date to: Monday, November 1, 2022
             setDate(
@@ -50,9 +48,6 @@ function Clock({ clock }: Props) {
                 <h1 className="font-semibold text-7xl text-start">
                     {/* display the current time */}
                     {time}
-                    <span className="text-4xl">
-                        {new Date().getHours() < 12 ? "AM" : "PM"}
-                    </span>
                 </h1>
                 <h2 className="text-2xl">
                     {/* display the current date */}
@@ -61,9 +56,8 @@ function Clock({ clock }: Props) {
                 <h2 className="text-3xl font-semibold py-8">
                     {
                         // display the current greeting
-                        greetings[new Date().getHours() < 12 ? 0 : 1]
+                        greetings[new Date().getHours() < 17 ? 0 : 1]
                     }
-                    , Bartek
                 </h2>
             </section>
         </Transition>
