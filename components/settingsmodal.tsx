@@ -15,9 +15,13 @@ type Props = {
     setWeather: (weather: boolean) => void;
     news: boolean;
     setNews: (news: boolean) => void;
+    greeting: boolean;
+    setGreeting: (greeting: boolean) => void;
     storage: Storage | undefined;
-    selected: { name: string | null; value: number };
-    setSelected: (value: { name: string | null; value: number }) => void;
+    selected: { name: string; value: number };
+    setSelected: (value: { name: string; value: number }) => void;
+    searchEngine: { name: string; value: string };
+    setSearchEngine: (value: { name: string; value: string }) => void;
     bgUrl: string;
     setBgUrl: Dispatch<SetStateAction<string>>;
 };
@@ -33,9 +37,13 @@ export default function SettingsModal({
     setWeather,
     news,
     setNews,
+    greeting,
+    setGreeting,
     storage,
     selected,
     setSelected,
+    searchEngine,
+    setSearchEngine,
     bgUrl,
     setBgUrl,
 }: Props) {
@@ -82,42 +90,104 @@ export default function SettingsModal({
                                             Dock size
                                         </h3>
                                         <ListboxSelect
+                                            label="dockSize"
                                             storage={storage}
                                             selected={selected}
                                             setSelected={setSelected}
+                                            options={[
+                                                { name: "Small", value: 3 },
+                                                { name: "Medium", value: 3.5 },
+                                                { name: "Large", value: 4 },
+                                                { name: "Huge", value: 4.5 },
+                                            ]}
                                         />
                                     </div>
-                                    <div className="w-full flex flex-row items-center justify-between border-t-2 pt-4 pb-2 border-gray-500">
-                                        <h3 className="text-xl text-gray-100">
-                                            Clock
-                                        </h3>
-                                        <SwitchButton
-                                            enabled={clock}
-                                            runFunction={() => {
-                                                setClock(!clock);
-                                                storage &&
-                                                    storage.setItem(
-                                                        "clockSettings",
-                                                        JSON.stringify(!clock)
-                                                    );
-                                            }}
-                                        />
+                                    <div className="w-full flex flex-col items-center justify-center border-t-2 pt-4 pb-2 border-gray-500">
+                                        <div className="w-full flex flex-row items-center justify-between pb-1">
+                                            <h3 className="text-xl text-gray-100">
+                                                Clock
+                                            </h3>
+                                            <SwitchButton
+                                                enabled={clock}
+                                                runFunction={() => {
+                                                    setClock(!clock);
+                                                    storage &&
+                                                        storage.setItem(
+                                                            "clockSettings",
+                                                            JSON.stringify(
+                                                                !clock
+                                                            )
+                                                        );
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="w-full flex flex-row items-center justify-between pt-1">
+                                            <h3 className="text-lg text-gray-100 ml-3">
+                                                Greeting
+                                            </h3>
+                                            <SwitchButton
+                                                enabled={greeting}
+                                                runFunction={() => {
+                                                    setGreeting(!greeting);
+                                                    storage &&
+                                                        storage.setItem(
+                                                            "greeting",
+                                                            JSON.stringify(
+                                                                !greeting
+                                                            )
+                                                        );
+                                                }}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="w-full flex flex-row items-center justify-between py-2">
-                                        <h3 className="text-xl text-gray-100">
-                                            Search
-                                        </h3>
-                                        <SwitchButton
-                                            enabled={search}
-                                            runFunction={() => {
-                                                setSearch(!search);
-                                                storage &&
-                                                    storage.setItem(
-                                                        "searchSettings",
-                                                        JSON.stringify(!search)
-                                                    );
-                                            }}
-                                        />
+                                    <div className="w-full flex flex-col items-center justify-center py-2">
+                                        <div className="w-full flex flex-row items-center justify-between pb-1">
+                                            <h3 className="text-xl text-gray-100">
+                                                Search
+                                            </h3>
+                                            <SwitchButton
+                                                enabled={search}
+                                                runFunction={() => {
+                                                    setSearch(!search);
+                                                    storage &&
+                                                        storage.setItem(
+                                                            "searchSettings",
+                                                            JSON.stringify(
+                                                                !search
+                                                            )
+                                                        );
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="w-full flex flex-row items-center justify-between pt-1">
+                                            <h3 className="text-lg text-gray-100 ml-3">
+                                                Search Engine
+                                            </h3>
+                                            <ListboxSelect
+                                                label="searchEngine"
+                                                storage={storage}
+                                                selected={searchEngine}
+                                                setSelected={setSearchEngine}
+                                                options={[
+                                                    {
+                                                        name: "Google",
+                                                        value: "https://google.com/search?q=",
+                                                    },
+                                                    {
+                                                        name: "Bing",
+                                                        value: "https://bing.com/search?q=",
+                                                    },
+                                                    {
+                                                        name: "DuckDuckGo",
+                                                        value: "https://duckduckgo.com/?q=",
+                                                    },
+                                                    {
+                                                        name: "Qwant",
+                                                        value: "https://qwant.com/?q=",
+                                                    },
+                                                ]}
+                                            />
+                                        </div>
                                     </div>
                                     <div className="w-full flex flex-row items-center justify-between py-2">
                                         <h3 className="text-xl text-gray-100">

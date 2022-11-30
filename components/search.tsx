@@ -1,12 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 import { Transition } from "@headlessui/react";
 import { ChangeEvent, useState, KeyboardEvent } from "react";
 
 type Props = {
     placeholder: string;
     searchState: boolean;
+    searchEngine: { name: string; value: string };
 };
 
-export default function Search({ placeholder, searchState }: Props) {
+export default function Search({
+    placeholder,
+    searchState,
+    searchEngine,
+}: Props) {
     const [search, setSearch] = useState<string>("");
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +21,7 @@ export default function Search({ placeholder, searchState }: Props) {
 
     const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
         e.preventDefault();
-        window.location.href = `https://www.google.com/search?q=${search}`;
+        window.location.href = `${searchEngine.value}${search}`;
     };
 
     return (

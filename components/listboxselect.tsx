@@ -3,27 +3,27 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 type Props = {
-    selected: { name: string | null; value: number };
-    setSelected: (value: { name: string | null; value: number }) => void;
+    selected: { name: string; value: number | string };
+    setSelected: (value: { name: string; value: any }) => void;
     storage: Storage | undefined;
+    options: { name: string; value: any }[];
+    label: string;
 };
 
-const options = [
-    { name: "Small", value: 3 },
-    { name: "Medium", value: 3.5 },
-    { name: "Large", value: 4 },
-    { name: "Huge", value: 4.5 },
-];
-
-function ListboxSelect({ selected, setSelected, storage }: Props) {
+function ListboxSelect({
+    selected,
+    setSelected,
+    storage,
+    options,
+    label,
+}: Props) {
     return (
         <div className="z-40">
             <Listbox
                 value={selected}
                 onChange={(option: { name: string; value: number }) => {
                     setSelected(option);
-                    if (storage)
-                        storage.setItem("dockSize", JSON.stringify(option));
+                    if (storage) storage.setItem(label, JSON.stringify(option));
                 }}
             >
                 <div>
@@ -44,7 +44,11 @@ function ListboxSelect({ selected, setSelected, storage }: Props) {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Listbox.Options className="absolute border-gray-200/20 border mt-1 max-h-60 overflow-auto rounded-md backdrop-blur-md bg-gray-600/30 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <Listbox.Options
+                            className={`absolute border-gray-200/20 border mt-1 max-h-60 overflow-auto rounded-md backdrop-blur-md bg-gray-600/30 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ${
+                                label == "searchEngine" ? "-ml-3" : ""
+                            }`}
+                        >
                             {options.map((option, optionIdx) => (
                                 <Listbox.Option
                                     key={optionIdx}

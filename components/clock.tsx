@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 
 type Props = {
     clock: boolean;
+    greeting: boolean;
 };
 
-function Clock({ clock }: Props) {
+function Clock({ clock, greeting }: Props) {
     const [time, setTime] = useState<string>();
     const [date, setDate] = useState<string>();
     const greetings = ["Dzień dobry", "Dobry wieczór"];
@@ -44,7 +45,7 @@ function Clock({ clock }: Props) {
             leaveTo="opacity-0 scale-95"
             className={"w-full"}
         >
-            <section className="w-full text-gray-200 flex flex-col items-center justify-center backdrop-blur-md bg-gray-800/40 bg-opacity-50 shadow-[0_0_3px_1px] shadow-gray-300 px-6 pt-4 rounded-3xl">
+            <section className="w-full text-gray-200 flex flex-col items-center justify-center backdrop-blur-md bg-gray-800/40 bg-opacity-50 shadow-[0_0_3px_1px] shadow-gray-300 px-6 py-4 rounded-3xl">
                 <h1 className="font-semibold text-7xl text-start">
                     {/* display the current time */}
                     {time}
@@ -53,7 +54,12 @@ function Clock({ clock }: Props) {
                     {/* display the current date */}
                     {date}
                 </h2>
-                <h2 className="text-3xl font-semibold py-8">
+                <h2
+                    className="text-3xl font-semibold pt-4"
+                    style={{
+                        display: greeting ? "block" : "none",
+                    }}
+                >
                     {
                         // display the current greeting
                         greetings[new Date().getHours() < 17 ? 0 : 1]

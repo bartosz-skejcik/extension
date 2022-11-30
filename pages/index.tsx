@@ -16,6 +16,7 @@ export default function Home() {
     const [search, setSearch] = useState(true);
     const [weather, setWeather] = useState(false);
     const [news, setNews] = useState(false);
+    const [greeting, setGreeting] = useState(true);
     const [storage, setStorage] = useState<Storage>();
     const [apps, setApps] = useState<ItemInterface[]>([
         {
@@ -49,11 +50,18 @@ export default function Home() {
         },
     ]);
     const [selected, setSelected] = useState<{
-        name: string | null;
+        name: string;
         value: number;
     }>({
         name: "Medium",
         value: 3.5,
+    });
+    const [searchEngine, setSearchEngine] = useState<{
+        name: string;
+        value: string;
+    }>({
+        name: "Google",
+        value: "https://google.com/search?q=",
     });
     const [bgUrl, setBgUrl] = useState("");
     const [workspaces, setWorkspaces] = useState<any>();
@@ -67,15 +75,33 @@ export default function Home() {
         const newsSettings = localStorage.getItem("newsSettings");
         const appSettings = localStorage.getItem("appSettings");
         const dockSize = localStorage.getItem("dockSize");
+        const searchEngineSetting = localStorage.getItem("searchEngine");
         const wallpaperUrl = localStorage.getItem("wallpaper");
         const workspacesSettings = localStorage.getItem("workspaces");
+        const greetingSettings = localStorage.getItem("greeting");
 
         // set settings
         if (weatherSettings) setWeather(JSON.parse(weatherSettings));
         if (clockSettings) setClock(JSON.parse(clockSettings));
         if (searchSettings) setSearch(JSON.parse(searchSettings));
         if (newsSettings) setNews(JSON.parse(newsSettings));
+        if (greetingSettings) setGreeting(JSON.parse(greetingSettings));
         if (appSettings) setApps(JSON.parse(appSettings));
+        if (searchEngineSetting) {
+            setSearchEngine(JSON.parse(searchEngineSetting));
+        } else {
+            localStorage.setItem(
+                "searchEngine",
+                JSON.stringify({
+                    name: "Google",
+                    value: "https://google.com/search?q=",
+                })
+            );
+            setSearchEngine({
+                name: "Google",
+                value: "https://google.com/search?q=",
+            });
+        }
         if (dockSize) {
             setSelected(JSON.parse(dockSize));
         } else {
@@ -141,9 +167,13 @@ export default function Home() {
                     setWeather={setWeather}
                     news={news}
                     setNews={setNews}
+                    greeting={greeting}
+                    setGreeting={setGreeting}
                     storage={storage}
                     selected={selected}
                     setSelected={setSelected}
+                    searchEngine={searchEngine}
+                    setSearchEngine={setSearchEngine}
                     bgUrl={bgUrl}
                     setBgUrl={setBgUrl}
                 />
@@ -154,13 +184,14 @@ export default function Home() {
                     setApps={setApps}
                 />
                 <section className="flex flex-col items-center justify-start w-1/4 px-10 py-20 space-y-8 h-full overflow-y-scroll">
-                    <Clock clock={clock} />
+                    <Clock clock={clock} greeting={greeting} />
                     <Weather weather={weather} />
                 </section>
                 <section className="flex flex-col items-center justify-start px-10 py-20 w-3/4 h-full">
                     <Search
                         placeholder={"Search the web"}
                         searchState={search}
+                        searchEngine={searchEngine}
                     />
                     {workspaces && (
                         <Workspaces
