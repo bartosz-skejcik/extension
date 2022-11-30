@@ -21,23 +21,20 @@ function Weather({ weather }: Props) {
     const [forecast, setForecast] = useState<any>([]);
 
     useEffect(() => {
-        if (data.length < 1) {
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                weatherHelper.getLocationKey(
-                    position.coords.latitude,
-                    position.coords.longitude,
-                    setLocationKey,
-                    setLocationData,
-                    apiKey
-                );
-            });
-            if (locationKey) {
-                weatherHelper.getForecast(locationKey, setForecast, apiKey);
-                weatherHelper.sendRequest(locationKey, setData, apiKey);
-            }
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            weatherHelper.getLocationKey(
+                position.coords.latitude,
+                position.coords.longitude,
+                setLocationKey,
+                setLocationData,
+                apiKey
+            );
+        });
+        if (locationKey) {
+            weatherHelper.getForecast(locationKey, setForecast, apiKey);
+            weatherHelper.sendRequest(locationKey, setData, apiKey);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [weather]);
+    }, [locationKey, weather]);
     return data.length > 0 && forecast.DailyForecasts.length > 0 ? (
         <Transition
             show={weather}
@@ -51,7 +48,11 @@ function Weather({ weather }: Props) {
         >
             <section className="w-full text-gray-200 flex flex-col items-center justify-center backdrop-blur-md bg-gray-800/40 bg-opacity-50 shadow-[0_0_3px_1px] shadow-gray-300 px-6 py-4 rounded-3xl">
                 <h1 className="font-semibold text-3xl xl:text-4xl">
-                    {locationData.LocalizedName}, {locationData.Country?.ID}
+                    {/* if locationData.LocalizedName is longer than 10 characters set the rest of it to ... */}
+                    {locationData.LocalizedName.length > 11
+                        ? locationData.LocalizedName.slice(0, 11)
+                        : locationData.LocalizedName}
+                    ,{locationData.Country?.ID}
                 </h1>
                 <div className="flex flex-row items-center justify-around">
                     <img
