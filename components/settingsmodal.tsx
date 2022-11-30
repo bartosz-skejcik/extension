@@ -15,8 +15,6 @@ type Props = {
     setWeather: (weather: boolean) => void;
     news: boolean;
     setNews: (news: boolean) => void;
-    worldcup: boolean;
-    setWorldCup: (worldcup: boolean) => void;
     storage: Storage | undefined;
     selected: { name: string | null; value: number };
     setSelected: (value: { name: string | null; value: number }) => void;
@@ -35,8 +33,6 @@ export default function SettingsModal({
     setWeather,
     news,
     setNews,
-    worldcup,
-    setWorldCup,
     storage,
     selected,
     setSelected,
@@ -135,24 +131,6 @@ export default function SettingsModal({
                                                     storage.setItem(
                                                         "newsSettings",
                                                         JSON.stringify(!news)
-                                                    );
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="w-full flex flex-row items-center justify-between py-2">
-                                        <h3 className="text-xl text-gray-100">
-                                            WorldCup
-                                        </h3>
-                                        <SwitchButton
-                                            enabled={worldcup}
-                                            runFunction={() => {
-                                                setWorldCup(!worldcup);
-                                                storage &&
-                                                    storage.setItem(
-                                                        "worldcupSettings",
-                                                        JSON.stringify(
-                                                            !worldcup
-                                                        )
                                                     );
                                             }}
                                         />
