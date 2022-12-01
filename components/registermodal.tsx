@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 import Input from "./input";
 
 import { db } from "../utils/db";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, setDoc, getDocs, doc } from "firebase/firestore";
 
 type Props = {
     open: boolean;
@@ -37,21 +37,24 @@ export default function RegisterModal({
                 setError("User already exists");
                 return;
             }
-            const docRef = await addDoc(collection(db, "users"), {
+            const docRef = await setDoc(doc(db, "users", email), {
                 name,
                 surname,
                 email,
                 password,
-            });
-            if (docRef.id) {
-                setUser({
-                    name,
-                    surname,
-                    email,
-                    password,
+            })
+                .then(() => {
+                    setUser({
+                        name,
+                        surname,
+                        email,
+                        password,
+                    });
+                    setOpen(false);
+                })
+                .catch((error) => {
+                    setError(error);
                 });
-                setOpen(false);
-            }
         } catch (e: any) {
             setError(e.message);
         }
