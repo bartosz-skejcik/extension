@@ -52,7 +52,18 @@ export default function UserModal({ open, setOpen, user, setUser }: Props) {
                                 >
                                     User Details
                                 </Dialog.Title>
-                                <section className="flex flex-col items-center justify-center my-4">
+                                <section className="flex flex-col items-center justify-center my-4 space-y-4">
+                                    <div className="flex flex-row items-center justify-center w-full space-x-3">
+                                        <p className="w-1/2 py-1 px-3 rounded-xl bg-gray-600/40 text-gray-200 text-start">
+                                            {user.name}
+                                        </p>
+                                        <p className="w-1/2 py-1 px-3 rounded-xl bg-gray-600/40 text-gray-200 text-start">
+                                            {user.surname}
+                                        </p>
+                                    </div>
+                                    <p className="w-full py-1 px-3 rounded-xl bg-gray-600/40 text-gray-200 text-start">
+                                        {user.email}
+                                    </p>
                                     <button
                                         onClick={handleLogout}
                                         className="px-3 py-1 mt-4 w-1/3 text-gray-200 bg-gray-600/40 rounded-xl hover:scale-110 hover:shadow-[0_3px_10px_0] hover:shadow-blue-600 hover:bg-blue-600 transition duration-300"
