@@ -10,14 +10,25 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import Workspaces from "../components/workspaces";
 import News from "../components/news";
+import UserModal from "../components/usermodal";
+import LoginModal from "../components/loginmodal";
+import RegisterModal from "../components/registermodal";
+import { db } from "../utils/db";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function Home() {
-    const [clock, setClock] = useState(true);
-    const [search, setSearch] = useState(true);
-    const [weather, setWeather] = useState(false);
-    const [news, setNews] = useState(false);
-    const [greeting, setGreeting] = useState(true);
+    const [clock, setClock] = useState<boolean>();
+    const [search, setSearch] = useState<boolean>();
+    const [weather, setWeather] = useState<boolean>();
+    const [news, setNews] = useState<boolean>();
+    const [greeting, setGreeting] = useState<boolean>();
     const [storage, setStorage] = useState<Storage>();
+
+    const [user, setUser] = useState<any>({});
+    const [userModalOpen, setUserModalOpen] = useState(false);
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
+    const [registerModalOpen, setRegisterModalOpen] = useState(false);
+
     const [apps, setApps] = useState<ItemInterface[]>([
         {
             id: 1,
@@ -69,66 +80,178 @@ export default function Home() {
 
     useEffect(() => {
         // get settings from localStorage
-        const weatherSettings = localStorage.getItem("weatherSettings");
-        const clockSettings = localStorage.getItem("clockSettings");
-        const searchSettings = localStorage.getItem("searchSettings");
-        const newsSettings = localStorage.getItem("newsSettings");
-        const appSettings = localStorage.getItem("appSettings");
-        const dockSize = localStorage.getItem("dockSize");
-        const searchEngineSetting = localStorage.getItem("searchEngine");
-        const wallpaperUrl = localStorage.getItem("wallpaper");
-        const workspacesSettings = localStorage.getItem("workspaces");
-        const greetingSettings = localStorage.getItem("greeting");
+        const currentUser = localStorage.getItem("user") || "{}";
 
-        // set settings
-        if (weatherSettings) setWeather(JSON.parse(weatherSettings));
-        if (clockSettings) setClock(JSON.parse(clockSettings));
-        if (searchSettings) setSearch(JSON.parse(searchSettings));
-        if (newsSettings) setNews(JSON.parse(newsSettings));
-        if (greetingSettings) setGreeting(JSON.parse(greetingSettings));
-        if (appSettings) setApps(JSON.parse(appSettings));
-        if (searchEngineSetting) {
-            setSearchEngine(JSON.parse(searchEngineSetting));
-        } else {
-            localStorage.setItem(
-                "searchEngine",
-                JSON.stringify({
-                    name: "Google",
-                    value: "https://google.com/search?q=",
-                })
-            );
-            setSearchEngine({
-                name: "Google",
-                value: "https://google.com/search?q=",
+        // if there is a user object in localStorage, set it to the user state
+        // if not, create a new user object and set it to the user state
+        const userObj = JSON.parse(currentUser);
+        if (userObj.email) {
+            console.log("user found");
+            const docRef = getDoc(doc(db, "users", userObj.email));
+            // set the user state to the user object from firebase
+            docRef.then((doc) => {
+                if (doc.exists()) {
+                    setUser(doc.data());
+                    const {
+                        weather,
+                        clock,
+                        search,
+                        news,
+                        apps,
+                        dockSize,
+                        searchEngine,
+                        wallpaper,
+                        workspaces,
+                        greeting,
+                    } = doc.data().settings;
+
+                    // set settings
+                    if (weather) setWeather(weather);
+                    if (clock) setClock(clock);
+                    if (search) setSearch(search);
+                    if (news) setNews(news);
+                    if (greeting) setGreeting(greeting);
+                    if (apps) setApps(apps);
+                    if (searchEngine) {
+                        setSearchEngine(searchEngine);
+                    } else {
+                        setSearchEngine({
+                            name: "Google",
+                            value: "https://google.com/search?q=",
+                        });
+                    }
+
+                    if (dockSize) {
+                        setSelected(dockSize);
+                    } else {
+                        setSelected({ name: "Medium", value: 3.5 });
+                    }
+
+                    if (wallpaper) {
+                        setBgUrl(wallpaper);
+                    } else {
+                        setBgUrl(
+                            "https://wallpaperaccess.com/full/2180654.jpg"
+                        );
+                    }
+
+                    if (workspaces) {
+                        setWorkspaces(workspaces);
+                    }
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
             });
         }
-        if (dockSize) {
-            setSelected(JSON.parse(dockSize));
-        } else {
-            localStorage.setItem(
-                "dockSize",
-                JSON.stringify({
-                    name: "Medium",
-                    value: 3.5,
-                })
-            );
-            setSelected({ name: "Medium", value: 3.5 });
-        }
-        if (wallpaperUrl) {
-            setBgUrl(wallpaperUrl);
-        } else {
-            localStorage.setItem(
-                "wallpaper",
-                "https://wallpaperaccess.com/full/2180654.jpg"
-            );
-            setBgUrl("https://wallpaperaccess.com/full/2180654.jpg");
-        }
-        if (workspacesSettings) {
-            setWorkspaces(JSON.parse(workspacesSettings));
+
+        if (!JSON.parse(currentUser).settings) {
+            console.log("no user settings");
+            // get settings from localStorage
+            const weatherSettings = localStorage.getItem("weatherSettings");
+            const clockSettings = localStorage.getItem("clockSettings");
+            const searchSettings = localStorage.getItem("searchSettings");
+            const newsSettings = localStorage.getItem("newsSettings");
+            const appSettings = localStorage.getItem("appSettings");
+            const dockSize = localStorage.getItem("dockSize");
+            const searchEngineSetting = localStorage.getItem("searchEngine");
+            const wallpaperUrl = localStorage.getItem("wallpaper");
+            const workspacesSettings = localStorage.getItem("workspaces");
+            const greetingSettings = localStorage.getItem("greeting");
+
+            // set settings
+            if (weatherSettings) setWeather(JSON.parse(weatherSettings));
+            if (clockSettings) setClock(JSON.parse(clockSettings));
+            if (searchSettings) setSearch(JSON.parse(searchSettings));
+            if (newsSettings) setNews(JSON.parse(newsSettings));
+            if (greetingSettings) setGreeting(JSON.parse(greetingSettings));
+            if (appSettings) setApps(JSON.parse(appSettings));
+            if (searchEngineSetting) {
+                setSearchEngine(JSON.parse(searchEngineSetting));
+            } else {
+                localStorage.setItem(
+                    "searchEngine",
+                    JSON.stringify({
+                        name: "Google",
+                        value: "https://google.com/search?q=",
+                    })
+                );
+                setSearchEngine({
+                    name: "Google",
+                    value: "https://google.com/search?q=",
+                });
+            }
+            if (dockSize) {
+                setSelected(JSON.parse(dockSize));
+            } else {
+                localStorage.setItem(
+                    "dockSize",
+                    JSON.stringify({
+                        name: "Medium",
+                        value: 3.5,
+                    })
+                );
+                setSelected({ name: "Medium", value: 3.5 });
+            }
+            if (wallpaperUrl) {
+                setBgUrl(wallpaperUrl);
+            } else {
+                localStorage.setItem(
+                    "wallpaper",
+                    "https://wallpaperaccess.com/full/2180654.jpg"
+                );
+                setBgUrl("https://wallpaperaccess.com/full/2180654.jpg");
+            }
+            if (workspacesSettings) {
+                setWorkspaces(JSON.parse(workspacesSettings));
+            }
         }
 
         setStorage(localStorage);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (user.email) {
+            localStorage.setItem("user", JSON.stringify(user));
+        }
+    }, [user]);
+
+    // on any setting change write it to the user object and send it to firebase
+    useEffect(() => {
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        if (user.email) {
+            const userObj = {
+                ...currentUser,
+                settings: {
+                    weather: weather || false,
+                    clock: clock || false,
+                    search: search || false,
+                    news: news || false,
+                    greeting: greeting || false,
+                    apps: apps,
+                    dockSize: selected || false,
+                    searchEngine: searchEngine,
+                    wallpaper: bgUrl,
+                },
+            };
+            setUser(userObj);
+            storage?.setItem("user", JSON.stringify(userObj));
+            const docRef = setDoc(doc(db, "users", user.email), userObj);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        weather,
+        clock,
+        search,
+        news,
+        apps,
+        selected,
+        searchEngine,
+        bgUrl,
+        greeting,
+        user.email,
+    ]);
 
     const [open, setOpen] = useState<boolean>(false);
     const [newAppModalOpen, setNewAppModalOpen] = useState<boolean>(false);
@@ -151,6 +274,8 @@ export default function Home() {
                 setOpen={setOpen}
                 setNewAppOpen={setNewAppModalOpen}
                 selected={selected}
+                setUserModalOpen={setUserModalOpen}
+                setLoginModalOpen={setLoginModalOpen}
             />
             <section
                 className={`flex flex-row items-start justify-center bg-cover w-full h-full`}
@@ -159,15 +284,15 @@ export default function Home() {
                 <SettingsModal
                     open={open}
                     setOpen={setOpen}
-                    clock={clock}
+                    clock={clock || false}
                     setClock={setClock}
-                    search={search}
+                    search={search || false}
                     setSearch={setSearch}
-                    weather={weather}
+                    weather={weather || false}
                     setWeather={setWeather}
-                    news={news}
+                    news={news || false}
                     setNews={setNews}
-                    greeting={greeting}
+                    greeting={greeting || false}
                     setGreeting={setGreeting}
                     storage={storage}
                     selected={selected}
@@ -183,14 +308,35 @@ export default function Home() {
                     apps={apps}
                     setApps={setApps}
                 />
+                <UserModal
+                    open={userModalOpen}
+                    setOpen={setUserModalOpen}
+                    user={user}
+                    setUser={setUser}
+                />
+                <LoginModal
+                    open={loginModalOpen}
+                    setOpen={setLoginModalOpen}
+                    setUser={setUser}
+                    setRegisterOpen={setRegisterModalOpen}
+                />
+                <RegisterModal
+                    open={registerModalOpen}
+                    setOpen={setRegisterModalOpen}
+                    setUser={setUser}
+                    setLoginOpen={setLoginModalOpen}
+                />
                 <section className="flex flex-col items-center justify-start w-1/4 px-10 py-20 space-y-8 h-full overflow-y-scroll">
-                    <Clock clock={clock} greeting={greeting} />
-                    <Weather weather={weather} />
+                    <Clock
+                        clock={clock || false}
+                        greeting={greeting || false}
+                    />
+                    <Weather weather={weather || false} />
                 </section>
                 <section className="flex flex-col items-center justify-start px-10 py-20 w-3/4 h-full">
                     <Search
                         placeholder={"Search the web"}
-                        searchState={search}
+                        searchState={search || false}
                         searchEngine={searchEngine}
                     />
                     {workspaces && (
@@ -199,7 +345,7 @@ export default function Home() {
                             workspaces={workspaces}
                         />
                     )}
-                    <News news={news} />
+                    <News news={news || false} />
                 </section>
             </section>
         </section>

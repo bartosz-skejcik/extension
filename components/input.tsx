@@ -4,7 +4,7 @@ type Props = {
     value: string | number;
     setValue: Dispatch<SetStateAction<string>>;
     placeholder: string;
-    storage: Storage | undefined;
+    storage?: Storage | undefined;
 };
 
 export default function input({

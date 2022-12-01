@@ -15,6 +15,8 @@ interface Props {
     storage: Storage | undefined;
     setApps: Dispatch<SetStateAction<ItemInterface[]>>;
     selected: { name: string | null; value: number };
+    setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+    setUserModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 function Dock({
@@ -24,6 +26,8 @@ function Dock({
     setApps,
     storage,
     selected,
+    setLoginModalOpen,
+    setUserModalOpen,
 }: Props) {
     useEffect(() => {
         // save settings to localStorage
@@ -87,7 +91,23 @@ function Dock({
                 >
                     <Cog6ToothIcon className="w-8/12 h-8/12 rounded-full hover:text-blue-600 hover:scale-90 hover:rotate-180 transition duration-500 text-gray-500" />
                 </button>
-                <button className="flex items-center justify-center">
+                <button
+                    onClick={() => {
+                        // check if user is logged in
+                        const user: any = JSON.parse(
+                            localStorage.getItem("user") || "{}"
+                        );
+                        console.log(user);
+                        if (storage && user.email) {
+                            // if yes, open user modal
+                            setUserModalOpen(true);
+                        } else {
+                            // if no, open login modal
+                            setLoginModalOpen(true);
+                        }
+                    }}
+                    className="flex items-center justify-center"
+                >
                     <UserCircleIcon className="w-8/12 h-8/12 rounded-full hover:text-blue-600 hover:scale-95 transition duration-500 text-gray-500" />
                 </button>
             </section>
