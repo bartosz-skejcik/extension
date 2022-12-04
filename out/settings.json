@@ -1,0 +1,5 @@
+{
+    "weather": true,
+    "clock": true,
+    "search": true
+}
