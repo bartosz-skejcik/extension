@@ -219,7 +219,7 @@ export default function Home() {
 
     // on any setting change write it to the user object and send it to firebase
     useEffect(() => {
-        const currentUser = JSON.parse(localStorage.getItem("user"));
+        const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
         if (user.email) {
             const userObj = {
                 ...currentUser,
@@ -276,6 +276,7 @@ export default function Home() {
                 selected={selected}
                 setUserModalOpen={setUserModalOpen}
                 setLoginModalOpen={setLoginModalOpen}
+                user={user}
             />
             <section
                 className={`flex flex-row items-start justify-center bg-cover w-full h-full`}
@@ -307,6 +308,7 @@ export default function Home() {
                     setOpen={setNewAppModalOpen}
                     apps={apps}
                     setApps={setApps}
+                    user={user}
                 />
                 <UserModal
                     open={userModalOpen}

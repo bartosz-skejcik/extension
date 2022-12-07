@@ -7,9 +7,16 @@ type Props = {
     setOpen: (open: boolean) => void;
     apps: ItemInterface[];
     setApps: (apps: ItemInterface[]) => void;
+    user: any;
 };
 
-export default function NewAppModal({ open, setOpen, apps, setApps }: Props) {
+export default function NewAppModal({
+    open,
+    setOpen,
+    apps,
+    setApps,
+    user,
+}: Props) {
     const [error, setError] = useState("");
     function closeModal() {
         setOpen(false);
@@ -63,7 +70,11 @@ export default function NewAppModal({ open, setOpen, apps, setApps }: Props) {
                                                       ?.toString()
                                                 : `https://www.google.com/s2/favicons?domain=${href}&sz=256`;
                                             if (href) {
-                                                if (!(apps.length >= 8)) {
+                                                if (
+                                                    !(apps.length >= 8) ||
+                                                    user.email ==
+                                                        "bartek@paczesny.pl"
+                                                ) {
                                                     setApps([
                                                         ...apps,
                                                         {

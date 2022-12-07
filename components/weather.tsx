@@ -64,7 +64,7 @@ function Weather({ weather }: Props) {
                         className="w-24"
                     />
                     <h2 className="text-7xl">
-                        {data[0].Temperature?.Metric?.Value}°C
+                        {Math.round(data[0].Temperature?.Metric?.Value)}°C
                     </h2>
                 </div>
                 <h3 className="font-bold text-2xl">{data[0].WeatherText}</h3>
@@ -73,10 +73,10 @@ function Weather({ weather }: Props) {
                         <ArrowUpCircleIcon className="w-5 h-5 text-green-500" />
                         :
                         <span>
-                            {
+                            {Math.round(
                                 forecast.DailyForecasts[0].Temperature.Maximum
                                     .Value
-                            }
+                            )}
                             °C
                         </span>
                     </h4>
@@ -84,10 +84,10 @@ function Weather({ weather }: Props) {
                         <ArrowDownCircleIcon className="w-5 h-5 text-red-500" />
                         :
                         <span>
-                            {
+                            {Math.round(
                                 forecast.DailyForecasts[0].Temperature.Minimum
                                     .Value
-                            }
+                            )}
                             °C
                         </span>
                     </h5>
@@ -96,7 +96,9 @@ function Weather({ weather }: Props) {
                     <div className="flex flex-col items-center justify-center">
                         <h3 className="text-md">
                             Real feel:{" "}
-                            {data[0].RealFeelTemperature?.Metric?.Value}
+                            {Math.round(
+                                data[0].RealFeelTemperature?.Metric?.Value
+                            )}
                             °C
                         </h3>
                         <h3 className="text-md">
@@ -105,7 +107,9 @@ function Weather({ weather }: Props) {
                     </div>
                     <div className="flex flex-col items-center justify-center">
                         <h3 className="text-md">
-                            Wind: {data[0].Wind?.Speed?.Metric?.Value} km/h
+                            Wind:{" "}
+                            {Math.round(data[0].Wind?.Speed?.Metric?.Value)}{" "}
+                            km/h
                         </h3>
                         <h3 className="text-md">
                             Press: {data[0].Pressure?.Metric?.Value} hPa
@@ -135,10 +139,16 @@ function Weather({ weather }: Props) {
                                         className="w-12"
                                     />
                                     <h3 className="text-md">
-                                        {day.Temperature.Maximum.Value}°C
+                                        {Math.round(
+                                            day.Temperature.Maximum.Value
+                                        )}
+                                        °C
                                     </h3>
                                     <h3 className="text-md">
-                                        {day.Temperature.Minimum.Value}°C
+                                        {Math.round(
+                                            day.Temperature.Minimum.Value
+                                        )}
+                                        °C
                                     </h3>
                                 </div>
                             );

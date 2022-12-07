@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import Tile from "./tile";
 import {
     Cog6ToothIcon,
@@ -6,7 +8,10 @@ import {
     UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ItemInterface, ReactSortable } from "react-sortablejs";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+import { fbStorage } from "../utils/db/index";
+import { ref, getDownloadURL } from "firebase/storage";
 
 interface Props {
     setOpen: Dispatch<SetStateAction<boolean>>;
@@ -17,6 +22,7 @@ interface Props {
     selected: { name: string | null; value: number };
     setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
     setUserModalOpen: Dispatch<SetStateAction<boolean>>;
+    user: any;
 }
 
 function Dock({
@@ -28,6 +34,7 @@ function Dock({
     selected,
     setLoginModalOpen,
     setUserModalOpen,
+    user,
 }: Props) {
     useEffect(() => {
         // save settings to localStorage
@@ -35,6 +42,39 @@ function Dock({
             storage.setItem("appSettings", JSON.stringify(apps));
         }
     }, [apps, storage]);
+
+    const [userProfilePicture, setUserProfilePicture] = useState<string>("");
+
+    useEffect(() => {
+        if (user.email) {
+            // get the user's profile picture from firebase storage
+            const storageRef = ref(
+                fbStorage,
+                `profilePictures/${user.email
+                    .replace(".", "_")
+                    .replace("@", "_")}.jpg`
+            );
+            getDownloadURL(storageRef)
+                .then((url) => {
+                    // `url` is the download URL for 'images/stars.jpg'
+
+                    // This can be downloaded directly:
+                    const xhr = new XMLHttpRequest();
+                    xhr.responseType = "blob";
+                    xhr.onload = (event) => {
+                        const blob = xhr.response;
+                    };
+                    xhr.open("GET", url);
+                    xhr.send();
+
+                    setUserProfilePicture(url);
+                    console.log(url);
+                })
+                .catch((error) => {
+                    // Handle any errors
+                });
+        }
+    }, [user]);
 
     return (
         <section
@@ -97,7 +137,6 @@ function Dock({
                         const user: any = JSON.parse(
                             localStorage.getItem("user") || "{}"
                         );
-                        console.log(user);
                         if (storage && user.email) {
                             // if yes, open user modal
                             setUserModalOpen(true);
@@ -108,7 +147,14 @@ function Dock({
                     }}
                     className="flex items-center justify-center"
                 >
-                    <UserCircleIcon className="w-8/12 h-8/12 rounded-full hover:text-blue-600 hover:scale-95 transition duration-500 text-gray-500" />
+                    {userProfilePicture ? (
+                        <img
+                            src={userProfilePicture}
+                            className="w-10 h-10 rounded-full hover:scale-95 transition duration-500"
+                        />
+                    ) : (
+                        <UserCircleIcon className="w-8/12 h-8/12 rounded-full hover:text-blue-600 hover:scale-95 transition duration-500 text-gray-500" />
+                    )}
                 </button>
             </section>
         </section>
