@@ -31,7 +31,11 @@ function Tile({ icon, href, apps, setApps }: Props) {
                 href={href}
                 className="flex p-2 mx-2 items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700 hover:rotate-12 transition duration-500"
             >
-                <img alt="icon" src={icon} className="block w-8 h-8" />
+                <img
+                    alt="icon"
+                    src={icon}
+                    className="block max-w-8 max-h-8 w-full h-full aspect-square"
+                />
             </a>
             <button
                 className={`${
