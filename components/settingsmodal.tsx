@@ -265,8 +265,8 @@ export default function SettingsModal({
                                                 {
                                                     name: "Dark",
                                                     values: {
-                                                        bg: "#171717",
-                                                        items: "#262626",
+                                                        bg: "#000",
+                                                        items: "#232323",
                                                         text: "#a3a3a3",
                                                     },
                                                 },
