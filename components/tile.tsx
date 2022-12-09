@@ -8,9 +8,10 @@ interface Props {
     href: string;
     apps: ItemInterface[];
     setApps: Dispatch<SetStateAction<ItemInterface[]>>;
+    theme: { name: string; values: { bg: string; items: string } };
 }
 
-function Tile({ icon, href, apps, setApps }: Props) {
+function Tile({ icon, href, apps, setApps, theme }: Props) {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseOver = () => {
@@ -29,7 +30,10 @@ function Tile({ icon, href, apps, setApps }: Props) {
         >
             <a
                 href={href}
-                className="flex p-2 mx-2 items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700 hover:rotate-12 transition duration-500"
+                className="flex p-2 mx-2 items-center justify-center rounded-lg hover:bg-gray-700 hover:rotate-12 transition duration-500"
+                style={{
+                    backgroundColor: theme.values && theme.values.items,
+                }}
             >
                 <img
                     alt="icon"

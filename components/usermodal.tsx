@@ -11,9 +11,19 @@ type Props = {
     setOpen: (open: boolean) => void;
     user: any;
     setUser: (user: any) => void;
+    theme: {
+        name: string;
+        values: { bg: string; items: string; text: string };
+    };
 };
 
-export default function UserModal({ open, setOpen, user, setUser }: Props) {
+export default function UserModal({
+    open,
+    setOpen,
+    user,
+    setUser,
+    theme,
+}: Props) {
     const handleLogout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("firstName");
@@ -99,10 +109,17 @@ export default function UserModal({ open, setOpen, user, setUser }: Props) {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden backdrop-blur-md bg-gray-900/90 shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all">
+                            <Dialog.Panel
+                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all"
+                                style={{
+                                    backgroundColor:
+                                        theme.values && theme.values.bg,
+                                    color: theme.values && theme.values.text,
+                                }}
+                            >
                                 <Dialog.Title
                                     as="h3"
-                                    className="text-2xl font-semibold leading-6 text-gray-200"
+                                    className="text-2xl font-semibold leading-6"
                                 >
                                     User Details
                                 </Dialog.Title>
@@ -129,7 +146,7 @@ export default function UserModal({ open, setOpen, user, setUser }: Props) {
                                     ) : (
                                         <>
                                             <label htmlFor="myIcon">
-                                                <UserCircleIcon className="w-32 h-32 rounded-full text-gray-200 cursor-pointer hover:scale-95 hover:opacity-40 transition duration-300" />
+                                                <UserCircleIcon className="w-32 h-32 rounded-full cursor-pointer hover:scale-95 hover:opacity-40 transition duration-300" />
                                             </label>
                                             <input
                                                 onChange={(e) =>
@@ -144,19 +161,19 @@ export default function UserModal({ open, setOpen, user, setUser }: Props) {
                                     )}
                                     <section className="flex flex-1 flex-col items-center justify-center my-4 space-y-4">
                                         <div className="flex flex-row items-center justify-center w-full space-x-3">
-                                            <p className="w-1/2 py-1 px-3 rounded-xl bg-gray-600/40 text-gray-200 text-start">
+                                            <p className="w-1/2 py-1 px-3 rounded-xl bg-gray-600/40 text-start">
                                                 {user.name}
                                             </p>
-                                            <p className="w-1/2 py-1 px-3 rounded-xl bg-gray-600/40 text-gray-200 text-start">
+                                            <p className="w-1/2 py-1 px-3 rounded-xl bg-gray-600/40 text-start">
                                                 {user.surname}
                                             </p>
                                         </div>
-                                        <p className="w-full py-1 px-3 rounded-xl bg-gray-600/40 text-gray-200 text-start">
+                                        <p className="w-full py-1 px-3 rounded-xl bg-gray-600/40 text-start">
                                             {user.email}
                                         </p>
                                         <button
                                             onClick={handleLogout}
-                                            className="px-3 py-1 mt-4 w-1/3 text-gray-200 bg-gray-600/40 rounded-xl hover:scale-110 hover:shadow-[0_3px_10px_0] hover:shadow-blue-600 hover:bg-blue-600 transition duration-300"
+                                            className="px-3 py-1 mt-4 w-1/3 bg-gray-600/40 rounded-xl hover:scale-110 hover:shadow-[0_3px_10px_0] hover:shadow-blue-600 hover:bg-blue-600 transition duration-300"
                                         >
                                             Logout
                                         </button>

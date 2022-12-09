@@ -74,6 +74,17 @@ export default function Home() {
         name: "Google",
         value: "https://google.com/search?q=",
     });
+    const [theme, setTheme] = useState<{
+        name: string;
+        values: { bg: string; items: string; text: string };
+    }>({
+        name: "Dark Blue",
+        values: {
+            bg: "#111827",
+            items: "#1f2937",
+            text: "#9ca3af",
+        },
+    });
     const [bgUrl, setBgUrl] = useState("");
     const [workspaces, setWorkspaces] = useState<any>();
     const [workspaceModalOpen, setWorkspaceModalOpen] = useState(false);
@@ -103,6 +114,7 @@ export default function Home() {
                         wallpaper,
                         workspaces,
                         greeting,
+                        theme,
                     } = doc.data().settings;
 
                     // set settings
@@ -118,6 +130,19 @@ export default function Home() {
                         setSearchEngine({
                             name: "Google",
                             value: "https://google.com/search?q=",
+                        });
+                    }
+
+                    if (theme) {
+                        setTheme(theme);
+                    } else {
+                        setTheme({
+                            name: "Dark Blue",
+                            values: {
+                                bg: "#111827",
+                                items: "#1f2937",
+                                text: "#9ca3af",
+                            },
                         });
                     }
 
@@ -233,6 +258,7 @@ export default function Home() {
                     dockSize: selected || false,
                     searchEngine: searchEngine,
                     wallpaper: bgUrl,
+                    theme: theme,
                 },
             };
             setUser(userObj);
@@ -250,6 +276,7 @@ export default function Home() {
         searchEngine,
         bgUrl,
         greeting,
+        theme,
         user.email,
     ]);
 
@@ -276,6 +303,7 @@ export default function Home() {
                 selected={selected}
                 setUserModalOpen={setUserModalOpen}
                 setLoginModalOpen={setLoginModalOpen}
+                theme={theme}
                 user={user}
             />
             <section
@@ -300,6 +328,8 @@ export default function Home() {
                     setSelected={setSelected}
                     searchEngine={searchEngine}
                     setSearchEngine={setSearchEngine}
+                    theme={theme}
+                    setTheme={setTheme}
                     bgUrl={bgUrl}
                     setBgUrl={setBgUrl}
                 />
@@ -309,12 +339,14 @@ export default function Home() {
                     apps={apps}
                     setApps={setApps}
                     user={user}
+                    theme={theme}
                 />
                 <UserModal
                     open={userModalOpen}
                     setOpen={setUserModalOpen}
                     user={user}
                     setUser={setUser}
+                    theme={theme}
                 />
                 <LoginModal
                     open={loginModalOpen}

@@ -8,6 +8,10 @@ type Props = {
     apps: ItemInterface[];
     setApps: (apps: ItemInterface[]) => void;
     user: any;
+    theme: {
+        name: string;
+        values: { bg: string; items: string; text: string };
+    };
 };
 
 export default function NewAppModal({
@@ -16,6 +20,7 @@ export default function NewAppModal({
     apps,
     setApps,
     user,
+    theme,
 }: Props) {
     const [error, setError] = useState("");
     function closeModal() {
@@ -48,10 +53,17 @@ export default function NewAppModal({
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden backdrop-blur-md bg-gray-900/90 shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all">
+                            <Dialog.Panel
+                                style={{
+                                    backgroundColor:
+                                        theme.values && theme.values.bg,
+                                    color: theme.values && theme.values.text,
+                                }}
+                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all"
+                            >
                                 <Dialog.Title
                                     as="h3"
-                                    className="text-2xl font-semibold leading-6 text-gray-200"
+                                    className="text-2xl font-semibold leading-6"
                                 >
                                     Add new App
                                 </Dialog.Title>
@@ -106,7 +118,12 @@ export default function NewAppModal({
                                                 name="href"
                                                 id="href"
                                                 placeholder="URL"
-                                                className="w-full px-4 py-2 text-gray-300 bg-gray-300/10 backdrop-blur-md rounded-md"
+                                                className={`w-full px-4 py-2 backdrop-blur-md rounded-md placeholder:text-[${theme.values.text}]`}
+                                                style={{
+                                                    backgroundColor:
+                                                        theme.values &&
+                                                        theme.values.items,
+                                                }}
                                             />
                                         </div>
                                         <div className="flex flex-col items-center justify-center space-y-2 mt-4">
@@ -115,7 +132,12 @@ export default function NewAppModal({
                                                 name="icon"
                                                 id="icon"
                                                 placeholder="Icon (optional)"
-                                                className="w-full px-4 py-2 text-gray-300 bg-gray-300/10 backdrop-blur-md rounded-md"
+                                                className={`w-full px-4 py-2 backdrop-blur-md rounded-md placeholder:text-[${theme.values.text}]`}
+                                                style={{
+                                                    backgroundColor:
+                                                        theme.values &&
+                                                        theme.values.items,
+                                                }}
                                             />
                                         </div>
                                         <div className="flex flex-col items-center justify-center space-y-2 mt-4 text-red-500">
@@ -124,7 +146,7 @@ export default function NewAppModal({
                                         <div className="flex items-center justify-center mt-4">
                                             <button
                                                 type="submit"
-                                                className="px-4 py-2 text-gray-300 bg-blue-500/50 backdrop-blur-md rounded-md"
+                                                className="px-4 py-2 bg-blue-500/80 backdrop-blur-md rounded-md"
                                             >
                                                 Add
                                             </button>

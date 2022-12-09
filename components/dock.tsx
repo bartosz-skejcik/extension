@@ -22,6 +22,7 @@ interface Props {
     selected: { name: string | null; value: number };
     setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
     setUserModalOpen: Dispatch<SetStateAction<boolean>>;
+    theme: { name: string; values: { bg: string; items: string } };
     user: any;
 }
 
@@ -34,6 +35,7 @@ function Dock({
     selected,
     setLoginModalOpen,
     setUserModalOpen,
+    theme,
     user,
 }: Props) {
     useEffect(() => {
@@ -78,9 +80,10 @@ function Dock({
 
     return (
         <section
-            className={`flex h-full items-center justify-between flex-col bg-gray-900 py-6 space-y-6`}
+            className={`flex h-full items-center justify-between flex-col py-6 space-y-6`}
             style={{
                 width: selected.value + "%",
+                backgroundColor: theme.values && theme.values.bg,
             }}
         >
             <section className="flex flex-col items-center justify-center">
@@ -114,6 +117,7 @@ function Dock({
                             icon={item.icon}
                             apps={apps}
                             setApps={setApps}
+                            theme={theme}
                         />
                     ))}
                 </ReactSortable>

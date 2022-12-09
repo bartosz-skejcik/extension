@@ -22,6 +22,14 @@ type Props = {
     setSelected: (value: { name: string; value: number }) => void;
     searchEngine: { name: string; value: string };
     setSearchEngine: (value: { name: string; value: string }) => void;
+    theme: {
+        name: string;
+        values: { bg: string; items: string; text: string };
+    };
+    setTheme: (value: {
+        name: string;
+        values: { bg: string; items: string; text: string };
+    }) => void;
     bgUrl: string;
     setBgUrl: Dispatch<SetStateAction<string>>;
 };
@@ -44,6 +52,8 @@ export default function SettingsModal({
     setSelected,
     searchEngine,
     setSearchEngine,
+    theme,
+    setTheme,
     bgUrl,
     setBgUrl,
 }: Props) {
@@ -77,18 +87,23 @@ export default function SettingsModal({
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden backdrop-blur-md bg-gray-900/90 shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all">
+                            <Dialog.Panel
+                                style={{
+                                    backgroundColor:
+                                        theme.values && theme.values.bg,
+                                    color: theme.values && theme.values.text,
+                                }}
+                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all"
+                            >
                                 <Dialog.Title
                                     as="h3"
-                                    className="text-2xl font-semibold leading-6 text-gray-200"
+                                    className="text-2xl font-semibold leading-6"
                                 >
                                     User settings
                                 </Dialog.Title>
                                 <section className="flex flex-col items-center justify-center my-4">
                                     <div className="w-full flex flex-row items-center justify-between pb-4 pt-2">
-                                        <h3 className="text-xl text-gray-100">
-                                            Dock size
-                                        </h3>
+                                        <h3 className="text-xl">Dock size</h3>
                                         <ListboxSelect
                                             label="dockSize"
                                             storage={storage}
@@ -100,13 +115,12 @@ export default function SettingsModal({
                                                 { name: "Large", value: 4 },
                                                 { name: "Huge", value: 4.5 },
                                             ]}
+                                            theme={theme}
                                         />
                                     </div>
                                     <div className="w-full flex flex-col items-center justify-center border-t-2 pt-4 pb-2 border-gray-500">
                                         <div className="w-full flex flex-row items-center justify-between pb-1">
-                                            <h3 className="text-xl text-gray-100">
-                                                Clock
-                                            </h3>
+                                            <h3 className="text-xl">Clock</h3>
                                             <SwitchButton
                                                 enabled={clock}
                                                 runFunction={() => {
@@ -122,7 +136,7 @@ export default function SettingsModal({
                                             />
                                         </div>
                                         <div className="w-full flex flex-row items-center justify-between pt-1">
-                                            <h3 className="text-lg text-gray-100 ml-3">
+                                            <h3 className="text-lg ml-3">
                                                 Greeting
                                             </h3>
                                             <SwitchButton
@@ -142,9 +156,7 @@ export default function SettingsModal({
                                     </div>
                                     <div className="w-full flex flex-col items-center justify-center py-2">
                                         <div className="w-full flex flex-row items-center justify-between pb-1">
-                                            <h3 className="text-xl text-gray-100">
-                                                Search
-                                            </h3>
+                                            <h3 className="text-xl">Search</h3>
                                             <SwitchButton
                                                 enabled={search}
                                                 runFunction={() => {
@@ -160,7 +172,7 @@ export default function SettingsModal({
                                             />
                                         </div>
                                         <div className="w-full flex flex-row items-center justify-between pt-1">
-                                            <h3 className="text-lg text-gray-100 ml-3">
+                                            <h3 className="text-lg ml-3">
                                                 Search Engine
                                             </h3>
                                             <ListboxSelect
@@ -186,13 +198,12 @@ export default function SettingsModal({
                                                         value: "https://qwant.com/?q=",
                                                     },
                                                 ]}
+                                                theme={theme}
                                             />
                                         </div>
                                     </div>
                                     <div className="w-full flex flex-row items-center justify-between py-2">
-                                        <h3 className="text-xl text-gray-100">
-                                            News
-                                        </h3>
+                                        <h3 className="text-xl">News</h3>
                                         <SwitchButton
                                             enabled={news}
                                             runFunction={() => {
@@ -205,10 +216,8 @@ export default function SettingsModal({
                                             }}
                                         />
                                     </div>
-                                    <div className="w-full flex flex-row items-center justify-between pt-2 pb-4">
-                                        <h3 className="text-xl text-gray-100">
-                                            Weather
-                                        </h3>
+                                    <div className="w-full flex flex-row items-center justify-between pt-2 pb-2">
+                                        <h3 className="text-xl">Weather</h3>
                                         <SwitchButton
                                             enabled={weather}
                                             runFunction={() => {
@@ -221,8 +230,52 @@ export default function SettingsModal({
                                             }}
                                         />
                                     </div>
+                                    <div className="w-full flex flex-row items-center justify-between pt-2 pb-4">
+                                        <h3 className="text-xl">Theme</h3>
+                                        <ListboxSelect
+                                            label="theme"
+                                            storage={storage}
+                                            selected={theme}
+                                            setSelected={setTheme}
+                                            options={[
+                                                {
+                                                    name: "Dark Blue",
+                                                    values: {
+                                                        bg: "#111827",
+                                                        items: "#1f2937",
+                                                        text: "#9ca3af",
+                                                    },
+                                                },
+                                                {
+                                                    name: "Dark Gray",
+                                                    values: {
+                                                        bg: "#18181b",
+                                                        items: "#27272a",
+                                                        text: "#a1a1aa",
+                                                    },
+                                                },
+                                                {
+                                                    name: "Light",
+                                                    values: {
+                                                        bg: "#e5e5e5",
+                                                        items: "#a3a3a3",
+                                                        text: "black",
+                                                    },
+                                                },
+                                                {
+                                                    name: "Dark",
+                                                    values: {
+                                                        bg: "#171717",
+                                                        items: "#262626",
+                                                        text: "#a3a3a3",
+                                                    },
+                                                },
+                                            ]}
+                                            theme={theme}
+                                        />
+                                    </div>
                                     <div className="w-full flex flex-col items-start justify-between border-t-2 pt-4 border-gray-500">
-                                        <h3 className="text-xl text-gray-100 mb-2">
+                                        <h3 className="text-xl mb-2">
                                             Wallpaper
                                         </h3>
                                         <Input
@@ -230,6 +283,7 @@ export default function SettingsModal({
                                             setValue={setBgUrl}
                                             placeholder={"Wallpaper link"}
                                             storage={storage}
+                                            theme={theme}
                                         />
                                     </div>
                                 </section>
