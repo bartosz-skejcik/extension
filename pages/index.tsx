@@ -353,12 +353,14 @@ export default function Home() {
                     setOpen={setLoginModalOpen}
                     setUser={setUser}
                     setRegisterOpen={setRegisterModalOpen}
+                    theme={theme}
                 />
                 <RegisterModal
                     open={registerModalOpen}
                     setOpen={setRegisterModalOpen}
                     setUser={setUser}
                     setLoginOpen={setLoginModalOpen}
+                    theme={theme}
                 />
                 <section className="flex flex-col items-center justify-start w-1/4 px-10 py-20 space-y-8 h-full overflow-y-scroll">
                     <Clock

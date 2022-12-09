@@ -11,6 +11,10 @@ type Props = {
     setOpen: (open: boolean) => void;
     setUser: (user: any) => void;
     setRegisterOpen: (open: boolean) => void;
+    theme: {
+        name: string;
+        values: { bg: string; items: string; text: string };
+    };
 };
 
 export default function LoginModal({
@@ -18,6 +22,7 @@ export default function LoginModal({
     setOpen,
     setUser,
     setRegisterOpen,
+    theme,
 }: Props) {
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
@@ -75,10 +80,17 @@ export default function LoginModal({
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden backdrop-blur-md bg-gray-900/90 shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all">
+                            <Dialog.Panel
+                                style={{
+                                    backgroundColor:
+                                        theme.values && theme.values.bg,
+                                    color: theme.values && theme.values.text,
+                                }}
+                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all"
+                            >
                                 <Dialog.Title
                                     as="h3"
-                                    className="text-2xl font-semibold leading-6 text-gray-200"
+                                    className="text-2xl font-semibold leading-6"
                                 >
                                     User Login
                                 </Dialog.Title>
@@ -88,13 +100,15 @@ export default function LoginModal({
                                             value={email}
                                             setValue={setEmail}
                                             placeholder={"Email"}
+                                            theme={theme}
                                         />
                                         <Input
                                             value={password}
                                             setValue={setPassword}
                                             placeholder={"Password"}
+                                            theme={theme}
                                         />
-                                        <span className="text-gray-400">
+                                        <span className="text-gray-500">
                                             {"Don't have an account? "}
                                             <button
                                                 className="text-blue-500"
@@ -114,7 +128,15 @@ export default function LoginModal({
                                     </section>
                                     <button
                                         onClick={handleLogin}
-                                        className="px-3 py-1 mt-4 w-1/3 text-gray-200 bg-gray-600/40 rounded-xl hover:scale-110 hover:shadow-[0_3px_10px_0] hover:shadow-blue-600 hover:bg-blue-600 transition duration-300"
+                                        style={{
+                                            backgroundColor:
+                                                theme.values &&
+                                                theme.values.items,
+                                            color:
+                                                theme.values &&
+                                                theme.values.text,
+                                        }}
+                                        className="px-3 py-1 mt-4 w-1/3 rounded-xl hover:scale-110 hover:shadow-[0_3px_10px_0] hover:shadow-blue-600 hover:bg-blue-600 transition duration-300"
                                     >
                                         Login
                                     </button>
