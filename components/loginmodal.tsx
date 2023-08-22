@@ -70,7 +70,7 @@ export default function LoginModal({
                 </Transition.Child>
 
                 <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                    <div className="flex items-center justify-center min-h-full p-4 text-center">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -86,7 +86,7 @@ export default function LoginModal({
                                         theme.values && theme.values.bg,
                                     color: theme.values && theme.values.text,
                                 }}
-                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all"
+                                className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform border-2 border-neutral-800 backdrop-blur-md rounded-xl"
                             >
                                 <Dialog.Title
                                     as="h3"
@@ -95,7 +95,7 @@ export default function LoginModal({
                                     User Login
                                 </Dialog.Title>
                                 <section className="flex flex-col items-center justify-center my-4">
-                                    <section className="flex flex-col items-center justify-center w-full space-y-3 my-4">
+                                    <section className="flex flex-col items-center justify-center w-full my-4 space-y-3">
                                         <Input
                                             value={email}
                                             setValue={setEmail}

@@ -110,7 +110,7 @@ export default function UserModal({
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel
-                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all"
+                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md rounded-xl p-6 text-left align-middle transition-all"
                                 style={{
                                     backgroundColor:
                                         theme.values && theme.values.bg,

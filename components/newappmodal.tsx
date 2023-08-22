@@ -59,7 +59,7 @@ export default function NewAppModal({
                                         theme.values && theme.values.bg,
                                     color: theme.values && theme.values.text,
                                 }}
-                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all"
+                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md rounded-xl p-6 text-left align-middle transition-all"
                             >
                                 <Dialog.Title
                                     as="h3"

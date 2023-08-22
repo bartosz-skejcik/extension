@@ -30,7 +30,7 @@ function Tile({ icon, href, apps, setApps, theme }: Props) {
         >
             <a
                 href={href}
-                className="flex p-2 mx-2 items-center justify-center rounded-lg hover:bg-gray-700 hover:rotate-12 transition duration-500"
+                className="flex p-2 mx-2 items-center justify-center rounded-xl hover:bg-gray-700 hover:rotate-12 transition duration-500"
                 style={{
                     backgroundColor: theme.values && theme.values.items,
                 }}

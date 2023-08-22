@@ -125,7 +125,7 @@ function Dock({
                     onClick={() => setNewAppOpen(true)}
                     className="flex items-center justify-center"
                 >
-                    <PlusIcon className="m-2 mx-4 rounded-lg w-11/12 h-11/12 hover:text-blue-600 hover:scale-90 hover:rotate-180 transition duration-500 text-gray-500" />
+                    <PlusIcon className="m-2 mx-4 rounded-xl w-11/12 h-11/12 hover:text-blue-600 hover:scale-90 hover:rotate-180 transition duration-500 text-gray-500" />
                 </button>
             </section>
             <section className="flex flex-col items-center justify-center space-y-4">

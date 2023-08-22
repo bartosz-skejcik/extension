@@ -22,7 +22,7 @@ export default function input({
     return (
         <input
             type={"text"}
-            className={`px-3 py-1 backdrop-blur-md w-full rounded-xl placeholder:text-[${
+            className={`px-3 py-1 backdrop-blur-md w-full rounded placeholder:text-[${
                 theme.values && theme.values.text
             }]`}
             style={{

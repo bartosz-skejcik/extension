@@ -77,7 +77,7 @@ export default function SettingsModal({
                 </Transition.Child>
 
                 <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                    <div className="flex items-center justify-center min-h-full p-4 text-center">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -93,7 +93,7 @@ export default function SettingsModal({
                                         theme.values && theme.values.bg,
                                     color: theme.values && theme.values.text,
                                 }}
-                                className="w-full max-w-md transform overflow-hidden backdrop-blur-md shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl p-6 text-left align-middle transition-all"
+                                className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform border-2 border-neutral-800 backdrop-blur-md rounded-xl"
                             >
                                 <Dialog.Title
                                     as="h3"
@@ -102,7 +102,7 @@ export default function SettingsModal({
                                     User settings
                                 </Dialog.Title>
                                 <section className="flex flex-col items-center justify-center my-4">
-                                    <div className="w-full flex flex-row items-center justify-between pb-4 pt-2">
+                                    <div className="flex flex-row items-center justify-between w-full pt-2 pb-4">
                                         <h3 className="text-xl">Dock size</h3>
                                         <ListboxSelect
                                             label="dockSize"
@@ -118,8 +118,8 @@ export default function SettingsModal({
                                             theme={theme}
                                         />
                                     </div>
-                                    <div className="w-full flex flex-col items-center justify-center border-t-2 pt-4 pb-2 border-gray-500">
-                                        <div className="w-full flex flex-row items-center justify-between pb-1">
+                                    <div className="flex flex-col items-center justify-center w-full pt-4 pb-2 border-t-2 border-gray-500">
+                                        <div className="flex flex-row items-center justify-between w-full pb-1">
                                             <h3 className="text-xl">Clock</h3>
                                             <SwitchButton
                                                 enabled={clock}
@@ -135,8 +135,8 @@ export default function SettingsModal({
                                                 }}
                                             />
                                         </div>
-                                        <div className="w-full flex flex-row items-center justify-between pt-1">
-                                            <h3 className="text-lg ml-3">
+                                        <div className="flex flex-row items-center justify-between w-full pt-1">
+                                            <h3 className="ml-3 text-lg">
                                                 Greeting
                                             </h3>
                                             <SwitchButton
@@ -154,8 +154,8 @@ export default function SettingsModal({
                                             />
                                         </div>
                                     </div>
-                                    <div className="w-full flex flex-col items-center justify-center py-2">
-                                        <div className="w-full flex flex-row items-center justify-between pb-1">
+                                    <div className="flex flex-col items-center justify-center w-full py-2">
+                                        <div className="flex flex-row items-center justify-between w-full pb-1">
                                             <h3 className="text-xl">Search</h3>
                                             <SwitchButton
                                                 enabled={search}
@@ -171,8 +171,8 @@ export default function SettingsModal({
                                                 }}
                                             />
                                         </div>
-                                        <div className="w-full flex flex-row items-center justify-between pt-1">
-                                            <h3 className="text-lg ml-3">
+                                        <div className="flex flex-row items-center justify-between w-full pt-1">
+                                            <h3 className="ml-3 text-lg">
                                                 Search Engine
                                             </h3>
                                             <ListboxSelect
@@ -202,7 +202,7 @@ export default function SettingsModal({
                                             />
                                         </div>
                                     </div>
-                                    <div className="w-full flex flex-row items-center justify-between py-2">
+                                    <div className="flex flex-row items-center justify-between w-full py-2">
                                         <h3 className="text-xl">News</h3>
                                         <SwitchButton
                                             enabled={news}
@@ -216,7 +216,7 @@ export default function SettingsModal({
                                             }}
                                         />
                                     </div>
-                                    <div className="w-full flex flex-row items-center justify-between pt-2 pb-2">
+                                    <div className="flex flex-row items-center justify-between w-full pt-2 pb-2">
                                         <h3 className="text-xl">Weather</h3>
                                         <SwitchButton
                                             enabled={weather}
@@ -230,7 +230,7 @@ export default function SettingsModal({
                                             }}
                                         />
                                     </div>
-                                    <div className="w-full flex flex-row items-center justify-between pt-2 pb-4">
+                                    <div className="flex flex-row items-center justify-between w-full pt-2 pb-4">
                                         <h3 className="text-xl">Theme</h3>
                                         <ListboxSelect
                                             label="theme"
@@ -249,9 +249,9 @@ export default function SettingsModal({
                                                 {
                                                     name: "Dark Gray",
                                                     values: {
-                                                        bg: "#18181b",
-                                                        items: "#27272a",
-                                                        text: "#a1a1aa",
+                                                        bg: "#171717",
+                                                        items: "#262626",
+                                                        text: "#a3a3a3",
                                                     },
                                                 },
                                                 {
@@ -274,8 +274,8 @@ export default function SettingsModal({
                                             theme={theme}
                                         />
                                     </div>
-                                    <div className="w-full flex flex-col items-start justify-between border-t-2 pt-4 border-gray-500">
-                                        <h3 className="text-xl mb-2">
+                                    <div className="flex flex-col items-start justify-between w-full pt-4 border-t-2 border-gray-500">
+                                        <h3 className="mb-2 text-xl">
                                             Wallpaper
                                         </h3>
                                         <Input

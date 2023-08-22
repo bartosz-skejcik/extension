@@ -9,9 +9,10 @@ import weatherHelper from "../helpers/weather.helper";
 
 type Props = {
     weather: boolean;
+    theme: { name: string; values: { bg: string; items: string } };
 };
 
-function Weather({ weather }: Props) {
+function Weather({ weather, theme }: Props) {
     const apiKey = "v07xGuWKiWUnzSG3BWFRqzG6SUF0vmMc";
 
     const [locationKey, setLocationKey] = useState<string>();
@@ -46,8 +47,13 @@ function Weather({ weather }: Props) {
             leaveTo="opacity-0 scale-95"
             className={"w-full"}
         >
-            <section className="w-full text-gray-200 flex flex-col items-center justify-center backdrop-blur-md bg-gray-800/40 bg-opacity-50 shadow-[0_0_3px_1px] shadow-gray-300 px-6 py-4 rounded-3xl">
-                <h1 className="font-semibold text-3xl xl:text-4xl">
+            <section
+                className="flex flex-col items-center justify-center w-full px-6 py-4 text-gray-200 bg-opacity-50 backdrop-blur-md bg-gray-800/40 rounded-xl"
+                style={{
+                    backgroundColor: theme.values && theme.values.bg,
+                }}
+            >
+                <h1 className="text-3xl font-semibold xl:text-4xl">
                     {/* if locationData.LocalizedName is longer than 10 characters set the rest of it to ... */}
                     {locationData.LocalizedName.length > 11
                         ? locationData.LocalizedName.slice(0, 11)
@@ -67,8 +73,8 @@ function Weather({ weather }: Props) {
                         {Math.round(data[0].Temperature?.Metric?.Value)}°C
                     </h2>
                 </div>
-                <h3 className="font-bold text-2xl">{data[0].WeatherText}</h3>
-                <div className="flex flex-row items-center justify-center space-x-5 w-full mt-2">
+                <h3 className="text-2xl font-bold">{data[0].WeatherText}</h3>
+                <div className="flex flex-row items-center justify-center w-full mt-2 space-x-5">
                     <h4 className="font-semibold text-xl flex items-center justify-center space-x-1.5">
                         <ArrowUpCircleIcon className="w-5 h-5 text-green-500" />
                         :
@@ -92,7 +98,7 @@ function Weather({ weather }: Props) {
                         </span>
                     </h5>
                 </div>
-                <div className="flex flex-col md:flex-row items-center justify-center space-x-0 md:space-x-16 mt-2 w-full">
+                <div className="flex flex-col items-center justify-center w-full mt-2 space-x-0 md:flex-row md:space-x-16">
                     <div className="flex flex-col items-center justify-center">
                         <h3 className="text-md">
                             Real feel:{" "}
@@ -116,7 +122,7 @@ function Weather({ weather }: Props) {
                         </h3>
                     </div>
                 </div>
-                <section className="flex flex-row items-center justify-center w-full space-x-3 lg:space-x-10 mt-3">
+                <section className="flex flex-row items-center justify-center w-full mt-3 space-x-3 lg:space-x-10">
                     {/* map the forecast data and display name of the day in 3 latters, icon, max and min temperatures dont include the [0] index of forecast */}
                     {forecast.DailyForecasts.map((day: any, index: number) => {
                         if (index !== 0) {

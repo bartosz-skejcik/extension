@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 
 type Props = {
     news: boolean;
+    theme: { name: string; values: { bg: string; items: string } };
 };
 
-export default function News({ news }: Props) {
+export default function News({ news, theme }: Props) {
     const [data, setData] = useState<any>([]);
 
     const apiKey = "pub_13769e3292267531fdb828270f29e0f038c93";
@@ -38,10 +39,13 @@ export default function News({ news }: Props) {
             leave="transition duration-300"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
-            className="w-full h-full text-gray-200 flex flex-col items-center justify-center backdrop-blur-md bg-gray-800/40 bg-opacity-50 shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl overflow-y-scroll pt-20"
+            className="flex flex-col items-center justify-center w-full h-full pt-20 overflow-y-scroll text-gray-200 bg-opacity-50 border-2 border-neutral-800 backdrop-blur-md bg-gray-800/40 rounded-xl"
+            style={{
+                backgroundColor: theme.values && theme.values.bg,
+            }}
         >
-            <h1 className="font-semibold text-3xl xl:text-4xl mb-10">News</h1>
-            <div className="flex flex-wrap w-full h-full items-center justify-center gap-10">
+            <h1 className="mb-10 text-3xl font-semibold xl:text-4xl">News</h1>
+            <div className="flex flex-wrap items-center justify-center w-full h-full gap-10">
                 {data.map((item: any, i: number) => (
                     <div
                         key={i}
@@ -54,10 +58,10 @@ export default function News({ news }: Props) {
                                     : "/no-image.jpg"
                             }
                             alt={item.title}
-                            className="rounded-t-2xl w-full max-h-56 object-cover"
+                            className="object-cover w-full rounded-t-2xl max-h-56"
                         />
-                        <div className="w-full flex flex-col items-center justify-around space-y-5 h-full border-2 border-b-white/40 border-x-white/40 border-t-transparent rounded-b-3xl">
-                            <h1 className="text-xl font-semibold text-center mt-2">
+                        <div className="flex flex-col items-center justify-around w-full h-full space-y-5 border-2 border-b-white/40 border-x-white/40 border-t-transparent rounded-b-3xl">
+                            <h1 className="mt-2 text-xl font-semibold text-center">
                                 {item.title.length > 50
                                     ? item.title.slice(0, 50) + "..."
                                     : item.title}
@@ -73,7 +77,7 @@ export default function News({ news }: Props) {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                <button className="px-4 py-2 text-sm font-semibold text-gray-200 bg-gray-800/40 bg-opacity-50 rounded-3xl mb-4 hover:scale-110 hover:bg-gray-800 transition duration-300">
+                                <button className="px-4 py-2 mb-4 text-sm font-semibold text-gray-200 transition duration-300 bg-opacity-50 rounded-xl bg-gray-800/40 hover:scale-110 hover:bg-gray-800">
                                     Read more
                                 </button>
                             </a>

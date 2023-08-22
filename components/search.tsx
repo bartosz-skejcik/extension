@@ -6,12 +6,14 @@ type Props = {
     placeholder: string;
     searchState: boolean;
     searchEngine: { name: string; value: string };
+    theme: { name: string; values: { bg: string; items: string } };
 };
 
 export default function Search({
     placeholder,
     searchState,
     searchEngine,
+    theme,
 }: Props) {
     const [search, setSearch] = useState<string>("");
 
@@ -35,10 +37,15 @@ export default function Search({
             leaveTo="opacity-0 scale-95"
             className="w-full"
         >
-            <form className="flex flex-row items-center justify-center w-full backdrop-blur-md bg-gray-800/40 shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl mb-8">
+            <form
+                className="flex flex-row items-center justify-center w-full px-1 mb-8 border-2 border-neutral-800 bg-gray-800/40 rounded-xl"
+                style={{
+                    backgroundColor: theme.values && theme.values.bg,
+                }}
+            >
                 <img
                     src="https://static-00.iconduck.com/assets.00/google-marketing-platform-icon-256x256-kwk0alas.png"
-                    className="mx-4 my-2 h-8 w-8"
+                    className="w-8 h-8 mx-4 my-2"
                     id="search-icon"
                     alt="Google Search Icon"
                 />
@@ -52,7 +59,7 @@ export default function Search({
                             handleSubmit(e);
                         }
                     }}
-                    className="pr-6 py-4 w-full text-xl text-white placeholder:text-gray-100 bg-transparent  focus:outline-none "
+                    className="w-full py-3.5 pr-6 text-xl text-white bg-transparent placeholder:text-neutral-400 focus:outline-none "
                 />
             </form>
         </Transition>

@@ -284,7 +284,7 @@ export default function Home() {
     const [newAppModalOpen, setNewAppModalOpen] = useState<boolean>(false);
 
     return (
-        <section className="flex flex-row w-screen max-h-screen h-screen overflow-x-hidden overflow-y-hidden">
+        <section className="flex flex-row w-screen h-screen max-h-screen overflow-x-hidden overflow-y-hidden">
             <Head>
                 <title>
                     Home{" ⌛"}
@@ -362,18 +362,20 @@ export default function Home() {
                     setLoginOpen={setLoginModalOpen}
                     theme={theme}
                 />
-                <section className="flex flex-col items-center justify-start w-1/4 px-10 py-20 space-y-8 h-full overflow-y-scroll">
+                <section className="flex flex-col items-center justify-start w-1/4 h-full p-10 space-y-8 overflow-y-scroll">
                     <Clock
                         clock={clock || false}
                         greeting={greeting || false}
+                        theme={theme}
                     />
-                    <Weather weather={weather || false} />
+                    <Weather weather={weather || false} theme={theme} />
                 </section>
-                <section className="flex flex-col items-center justify-start px-10 py-20 w-3/4 h-full">
+                <section className="flex flex-col items-center justify-start w-3/4 h-full p-10">
                     <Search
                         placeholder={"Search the web"}
                         searchState={search || false}
                         searchEngine={searchEngine}
+                        theme={theme}
                     />
                     {workspaces && (
                         <Workspaces
@@ -381,7 +383,7 @@ export default function Home() {
                             workspaces={workspaces}
                         />
                     )}
-                    <News news={news || false} />
+                    <News news={news || false} theme={theme} />
                 </section>
             </section>
         </section>

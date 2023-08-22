@@ -8,7 +8,7 @@ type Props = {
 
 export default function Workspaces({ workspaces, setOpen }: Props) {
     return (
-        <section className="flex flex-col items-start justify-start py-4 px-4 w-full h-full  backdrop-blur-md bg-gray-800/40 shadow-[0_0_3px_1px] shadow-gray-300 rounded-3xl">
+        <section className="flex flex-col items-start justify-start py-4 px-4 w-full h-full  backdrop-blur-md bg-gray-800/40 rounded-xl">
             <h1 className="px-4 py-2 text-left text-2xl font-bold text-gray-300">
                 Workspaces
             </h1>
@@ -25,7 +25,7 @@ export default function Workspaces({ workspaces, setOpen }: Props) {
                         <Disclosure key={index}>
                             {({ open }) => (
                                 <>
-                                    <Disclosure.Button className="m-2 flex w-full justify-between rounded-lg bg-gray-900/50 px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-800/50 transition duration-300 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                    <Disclosure.Button className="m-2 flex w-full justify-between rounded-xl bg-gray-900/50 px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-800/50 transition duration-300 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                                         <div className="flex flex-row space-x-2 items-center justify-center">
                                             <div className="rounded-full flex items-center justify-center bg-gray-400 text-gray-800 w-6 h-6">
                                                 <span>
