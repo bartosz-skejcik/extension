@@ -48,7 +48,7 @@ function Weather({ weather, theme }: Props) {
             className={"w-full"}
         >
             <section
-                className="flex flex-col items-center justify-center w-full px-6 py-4 text-gray-200 bg-opacity-50 backdrop-blur-md bg-gray-800/40 rounded-xl"
+                className="flex flex-col items-center justify-center w-full px-6 py-4 text-gray-200 border-2 border-neutral-800 bg-gray-800/40 rounded-xl"
                 style={{
                     backgroundColor: theme.values && theme.values.bg,
                 }}
